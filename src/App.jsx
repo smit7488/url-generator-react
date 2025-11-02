@@ -11,6 +11,7 @@ import { useURLGenerator } from './hooks/useURLGenerator';
 import { urlCategories } from './data/urlCategories';
 import { Container, Row, Col, Card, Form, Button, Offcanvas, Alert } from 'react-bootstrap';
 import Navigation from './components/Navigation';
+import Footer from './components/Footer';
 
 const App = () => {
   const { formData, errors, handleInputChange } = useFormValidation({
@@ -61,7 +62,7 @@ const App = () => {
 
   return (
        <div className="app-container min-vh-100 vw-100 w-100 bg-light">
-        <Navigation></Navigation>
+        <Navigation/>
       <Container>
         <Row className="g-0">
           <Col xs={12}>
@@ -248,9 +249,7 @@ const App = () => {
                     </>
                   )}
 
-                  <Button variant="primary" type="submit" className="mt-4 rounded-pill px-4">
-                    Generate URL
-                  </Button>
+             
                 </Form>
               </Card.Body>
             </Card>
@@ -262,15 +261,10 @@ const App = () => {
           </Col>
         </Row>
       </Container>
-
+<Footer />
       {/* Updates Sidebar replaced with React-Bootstrap Offcanvas */}
       <UpdatesSidebar show={showUpdates} onToggle={() => setShowUpdates(!showUpdates)} />
 
-      <footer className="text-center mt-4 pb-3 footer-text">
-        <small>
-          Created by <a href="mailto:Trevor.Smith@henryschein.com?subject=URL%20Generator&cc=Greg.Kowalczyk@henryschein.com" className="footer-link text-primary" onClick={() => setShowUpdates(true)}>Trevor Smith</a>
-        </small>
-      </footer>
     </div>
   );
 };
