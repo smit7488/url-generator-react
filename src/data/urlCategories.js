@@ -1,5 +1,12 @@
 export const urlCategories = [
   {
+    category: "Generic (Untagged)",
+    key: "Generic",
+    subcategories: [
+      { name: "Generic Url", key: "Generic", urls: [""], contentutm: [""] }
+    ]
+  },
+  {
     category: "Paid Search Ads",
     key: "PaidSearchAds",
     subcategories: [
@@ -61,36 +68,8 @@ export const urlCategories = [
     category: "Social",
     key: "Social",
     subcategories: [
-      {
-        name: "Instagram",
-        key: "SocialInstagram",
-        urls: ["utm_source=Instagram&utm_medium=Social"],
-        tier2: [
-          { name: "Instagram 1", key: "SocialInstagram1", urls: ["utm_source=Instagram&utm_medium=Social"], contentutm: ["SocialBannerInstagram1"] },
-          { name: "Instagram 2", key: "SocialInstagram2", urls: ["utm_source=Instagram&utm_medium=Social"], contentutm: ["SocialBannerInstagram2"] },
-          { name: "Instagram 3", key: "SocialInstagram3", urls: ["utm_source=Instagram&utm_medium=Social"], contentutm: ["SocialBannerInstagram3"] },
-          { name: "Instagram 4", key: "SocialInstagram4", urls: ["utm_source=Instagram&utm_medium=Social"], contentutm: ["SocialBannerInstagram4"] }
-        ]
-      },
-      {
-        name: "Twitter",
-        key: "SocialTwitter",
-        urls: ["utm_source=Twitter&utm_medium=Social"],
-        tier2: [
-          { name: "Twitter 1", key: "SocialTwitter1", urls: ["utm_source=Twitter&utm_medium=Social"], contentutm: ["SocialBannerTwitter1"] },
-          { name: "Twitter 2", key: "SocialTwitter2", urls: ["utm_source=Twitter&utm_medium=Social"], contentutm: ["SocialBannerTwitter2"] }
-        ]
-      },
-      {
-        name: "Facebook",
-        key: "SocialFacebook",
-        urls: ["utm_source=Facebook&utm_medium=Social"],
-        tier2: [
-          { name: "Facebook 1", key: "SocialFacebook1", urls: ["utm_source=Facebook&utm_medium=Social"], contentutm: ["SocialBannerFacebook1"] },
-          { name: "Facebook 2", key: "SocialFacebook2", urls: ["utm_source=Facebook&utm_medium=Social"], contentutm: ["SocialBannerFacebook2"] },
-          { name: "Facebook 3", key: "SocialFacebook3", urls: ["utm_source=Facebook&utm_medium=Social"], contentutm: ["SocialBannerFacebook3"] }
-        ]
-      },
+      { name: "Meta", key: "SocialMeta", urls: ["utm_source=Meta&utm_medium=Social"], contentutm: ["SocialBannerMeta"] },
+      { name: "Twitter", key: "SocialTwitter", urls: ["utm_source=Twitter&utm_medium=Social"], contentutm: ["SocialBannerTwitter"] },
       { name: "YouTube", key: "SocialYouTube", urls: ["utm_source=YouTube&utm_medium=Social"], contentutm: ["SocialBannerYouTube"] },
       { name: "LinkedIn", key: "SocialLinkedIn", urls: ["utm_source=LinkedIn&utm_medium=Social"], contentutm: ["SocialBannerLinkedIn"] }
     ]

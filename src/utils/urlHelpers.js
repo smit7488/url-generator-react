@@ -1,40 +1,115 @@
-export const sanitizeURL = (url) => {
+// Sanitize URL by removing duplicate '&' and trailing '&' or '?'
+function sanitizeURL(url) {
   let [base, queryString] = url.split('?');
   if (queryString) {
     queryString = queryString
       .split('&')
-      .filter(param => param)
+      .filter(param => param) // Remove empty parameters
       .join('&');
-    return `${base}?${queryString}`;
+    if (queryString.endsWith('&')) queryString = queryString.slice(0, -1);
+    if (queryString.endsWith('?')) queryString = queryString.slice(0, -1);
+    return queryString ? `${base}?${queryString}` : base;
   }
   return base;
-};
+}
 
-export const buildURL = (baseUrl, params) => {
-  const { items, promo, pricing, urlPart, dateProjectJob, contentUtm, 
-          division, commaCount, isHenrySchein } = params;
-  
-  let finalUrl = baseUrl.includes('?') ? baseUrl + '&' : baseUrl + '?';
+export const buildURL = (baseUrl, options) => {
+  const {
+    items,
+    promo,
+    pricing,
+    urlPart,
+    dateProjectJob,
+    contentUtm,
+    division,
+    formType,
+    isGeneric,
+    isHenrySchein
+  } = options;
 
-  if (isHenrySchein) {
-    if (items) finalUrl += `productid=${items}&`;
-    if (promo) finalUrl += `promocode=${promo}&`;
-    if (pricing !== 'dp=false') finalUrl += `${pricing}&`;
+  let finalUrl = '';
+  let base = baseUrl;
+  let queryStart = base.includes('?') ? '&' : '?';
+
+  // Handle Generic (Untagged) URLs
+  if (isGeneric) {
+    if (isHenrySchein) {
+      if (formType === 'gep' && items !== '') {
+        const formattedItems = items.split(',').map(code => `%22${code}%22`).join('');
+        base = base.replace(/\/search\/?$/, `/search/${formattedItems}`);
+        finalUrl = base + queryStart + 'type=products&exactsearch=false';
+      } else {
+        finalUrl = base + queryStart;
+        if (items !== '') {
+          finalUrl += `productid=${items}`;
+        }
+      }
+
+      // Add promo and pricing for OneWeb
+      if (formType === 'oneweb') {
+        if (promo !== '' && finalUrl.includes('?')) {
+          finalUrl += `&promocode=${promo.toUpperCase()}`;
+        }
+        if (pricing !== 'dp=false' && pricing !== '' && finalUrl.includes('?')) {
+          finalUrl += `&${pricing}`;
+        }
+      }
+    } else {
+      finalUrl = base;
+    }
+
+    return sanitizeURL(finalUrl.toLowerCase().replace(/promocode=[^&]*/i, promo ? `promocode=${promo.toUpperCase()}` : ''));
   }
 
-  finalUrl += urlPart;
-  finalUrl += dateProjectJob;
-  
-  if (contentUtm) {
+  // Handle Tagged URLs
+  if (isHenrySchein) {
+    if (formType === 'gep' && items !== '') {
+      const formattedItems = items.split(',').map(code => `%22${code}%22`).join('');
+      base = base.replace(/\/search\/?$/, `/search/${formattedItems}`);
+      finalUrl = base + queryStart + 'type=products&exactsearch=false&';
+    } else {
+      finalUrl = base + queryStart;
+      if (items !== '') {
+        finalUrl += `productid=${items}&`;
+      }
+    }
+
+    // Add promo and pricing
+    if (promo !== '') {
+      finalUrl += `promocode=${promo.toUpperCase()}&`;
+    }
+    if (pricing !== 'dp=false' && pricing !== '' && formType === 'oneweb') {
+      finalUrl += `${pricing}&`;
+    }
+  } else {
+    finalUrl = base + queryStart;
+  }
+
+  // Add UTM parameters
+  if (urlPart !== '') {
+    finalUrl += urlPart;
+  }
+
+  // Add campaign
+  if (dateProjectJob !== '' && !dateProjectJob.includes('undefined')) {
+    finalUrl += dateProjectJob;
+  }
+
+  // Add content
+  if (contentUtm !== '') {
     finalUrl += `&utm_content=${contentUtm}`;
   }
 
-  if (isHenrySchein) {
+  // Add division
+  if (division !== '') {
     finalUrl += `&utm_term=${division}&cdivid=${division}`;
-    if (division === 'specialmarkets') finalUrl += '_d';
-    if (commaCount > 23) finalUrl += '&browsingmode=p';
   }
 
-  finalUrl = finalUrl.toLowerCase().replace(/promocode=[^&]*/i, `promocode=${promo}`);
+  // Normalize to lowercase but keep promo code uppercase
+  finalUrl = finalUrl.toLowerCase();
+  if (promo) {
+    finalUrl = finalUrl.replace(/promocode=[^&]*/i, `promocode=${promo.toUpperCase()}`);
+  }
+
   return sanitizeURL(finalUrl);
 };

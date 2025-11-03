@@ -7,8 +7,12 @@ const FilterCheckbox = ({ checked, onChange, label, indent = 0 }) => (
       type="checkbox"
       checked={checked}
       onChange={onChange}
+      id={`filter-${label.replace(/\s+/g, '-')}`}
     />
-    <label className={`form-check-label filter-label-size-${indent}`}>
+    <label 
+      className={`form-check-label filter-label-size-${indent}`}
+      htmlFor={`filter-${label.replace(/\s+/g, '-')}`}
+    >
       {label}
     </label>
   </div>
@@ -16,11 +20,11 @@ const FilterCheckbox = ({ checked, onChange, label, indent = 0 }) => (
 
 const FilterCategory = ({ group, selectedGroups, onCheckboxChange }) => (
   <div className="filter-category">
-    <div className="fw-bold text-primary-dark filter-category-title">
+    <div className="filter-category-title">
       {group.category}
     </div>
     {group.subcategories.map(sub => (
-      <div key={sub.key} className="ms-3">
+      <div key={sub.key} className="ms-2">
         <FilterCheckbox
           checked={!!selectedGroups[sub.key]}
           onChange={() => onCheckboxChange(sub.key)}
@@ -28,7 +32,7 @@ const FilterCategory = ({ group, selectedGroups, onCheckboxChange }) => (
           indent={0}
         />
         {sub.tier2 && selectedGroups[sub.key] && (
-          <div className="ms-4">
+          <div className="ms-3">
             {sub.tier2.map(tier => (
               <FilterCheckbox
                 key={tier.key}
@@ -46,11 +50,8 @@ const FilterCategory = ({ group, selectedGroups, onCheckboxChange }) => (
 );
 
 const FilterPanel = ({ categories, selectedGroups, onCheckboxChange }) => (
-  <div className="card filter-panel shadow-lg h-100">
-    <div className="card-header filter-panel-header">
-      <h5 className="mb-0 text-primary-dark">Filters</h5>
-    </div>
-    <div className="card-body filter-panel-body p-3">
+  <div className="filter-panel">
+    <div className="filter-panel-body">
       {categories.map(group => (
         <FilterCategory
           key={group.key}

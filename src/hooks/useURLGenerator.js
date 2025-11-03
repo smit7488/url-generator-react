@@ -10,7 +10,21 @@ export const useURLGenerator = (formData, selectedGroups) => {
   }, [formData, selectedGroups]);
 
   const generateURLs = () => {
-    if (!formData.pageUrl || !formData.date || !formData.project || !formData.jobNumber) {
+    if (!formData.pageUrl) {
+      setGeneratedUrls([]);
+      return;
+    }
+
+    // Check if we should generate URLs (Generic doesn't require all fields)
+    const shouldGenerateGeneric = selectedGroups.Generic && formData.pageUrl;
+    const shouldGenerateTagged = !selectedGroups.Generic && 
+      formData.pageUrl && 
+      formData.date && 
+      formData.project && 
+      formData.jobNumber && 
+      formData.division;
+
+    if (!shouldGenerateGeneric && !shouldGenerateTagged) {
       setGeneratedUrls([]);
       return;
     }
@@ -27,9 +41,9 @@ export const useURLGenerator = (formData, selectedGroups) => {
     const vanity = formData.vanity.split('/').pop() || '';
     const dateProjectJob = `&utm_campaign=${date}-${project}-${jobNumber}`;
     const isHenrySchein = baseUrl.includes('henryschein');
-    const commaCount = (items.match(/,/g) || []).length;
 
     urlCategories.forEach(group => {
+      // Skip if requirements aren't met
       if (group.requiresMarketo && !formData.marketoFolderName) return;
       if (group.requiresQRContent && !formData.qrCodeContent) return;
       if (group.requiresVendorName && !formData.webLinkVendorName) return;
@@ -57,20 +71,21 @@ export const useURLGenerator = (formData, selectedGroups) => {
             finalContentUtm = formData.qrCodeContent.replace(/\s/g, '');
           }
 
-          // Use Marketo campaign if required
+          // Use Marketo campaign if required, otherwise use date-based campaign
           const campaignString = group.requiresMarketo 
             ? `&utm_campaign=${formData.marketoFolderName}`
-            : dateProjectJob;
+            : (dateProjectJob.includes('undefined') ? '' : dateProjectJob);
 
           return buildURL(baseUrl, {
             items,
             promo,
             pricing,
             urlPart: finalUrlPart,
-            dateProjectJob: campaignString,
-            contentUtm: finalContentUtm,
-            division,
-            commaCount,
+            dateProjectJob: group.key === "Generic" ? '' : campaignString,
+            contentUtm: group.key === "Generic" ? '' : finalContentUtm,
+            division: group.key === "Generic" ? '' : division,
+            formType: formData.formType,
+            isGeneric: group.key === "Generic",
             isHenrySchein
           });
         };
@@ -78,7 +93,7 @@ export const useURLGenerator = (formData, selectedGroups) => {
         if (sub.tier2) {
           sub.tier2.forEach(tier => {
             if (selectedGroups[tier.key]) {
-              const url = processUrl(tier.urls[0], tier.contentutm[0], tier.name);
+              const url = processUrl(tier.urls[0], tier.contentutm?.[0], tier.name);
               categoryUrls.push({ subcategory: sub.name, name: tier.name, url });
             }
           });

@@ -1,6 +1,6 @@
 export const validators = {
   pageUrl: (value) => {
-    const regex = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}([\/\w \.-]*)*\/?$/;
+    const regex = /^(https?:\/\/)?[^\s/$.?#].[^\s]*$/i;
     return !value || regex.test(value) ? null : "Please enter a valid URL";
   },
   
