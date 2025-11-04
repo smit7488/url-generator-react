@@ -26,7 +26,7 @@ const AppLayout = ({
       )}
       
       {/* Filter Column - Fixed on desktop, slide-out on mobile */}
-      <div className={`filter-column ${showMobileFilters ? 'mobile-filter-open' : ''}`}>
+      <div className={`filter-column border-right ${showMobileFilters ? 'mobile-filter-open' : ''}`}>
         {/* Desktop Filter Header - Always Visible */}
         <div className="filter-header-desktop d-none d-lg-block">
           <h5 className="mb-0">Filters</h5>
