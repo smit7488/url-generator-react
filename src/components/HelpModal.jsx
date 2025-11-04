@@ -185,13 +185,13 @@ const HelpModal = ({ show, onHide }) => {
                   </ul>
                 </div>
                 <div className="bg-light p-2 rounded mb-3 font-monospace small">
-                  ✓ Correct: 24DS2828, 25CO1001, 24IM5555
+                  ✓ Correct: 24DS2828, 25MS1001, 26CC5555
                 </div>
                 <div className="bg-danger bg-opacity-10 p-2 rounded mb-3 font-monospace small">
-                  ✗ Incorrect: 24D22828 (only 1 letter), 2DS28282 (3 digits at start)
+                  ✗ Incorrect: 2828 (no year or division), DS2882 (missing the year)
                 </div>
                 <p className="mb-0 small">
-                  The two-letter code (LL) typically represents your division abbreviation (DS = Dental Supply, IM = Internal Medicine, etc.)
+                  The two-letter code (LL) typically represents your division abbreviation (DS = Dental, MS = Medical, etc. GEP introduces further codes, such as 25DSMultichannel - which specifies that it's a multichannel campaign.)
                 </p>
               </Accordion.Body>
             </Accordion.Item>
