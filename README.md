@@ -2,121 +2,114 @@
 
 A modern, React-based URL generation tool for Henry Schein marketing professionals. URL-GENius streamlines the creation of UTM-tagged URLs for GA4 tracking across multiple marketing channels.
 
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Getting Started](#getting-started)
-- [Installation](#installation)
-- [Project Structure](#project-structure)
-- [Usage Guide](#usage-guide)
-- [Component Documentation](#component-documentation)
-- [Configuration](#configuration)
-- [Troubleshooting](#troubleshooting)
-- [Future Enhancements](#future-enhancements)
-- [Support](#support)
+![Version](https://img.shields.io/badge/URL--GENius-v2.0.0-blue)
+![React](https://img.shields.io/badge/React-18.2.0-61dafb)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.2.0-7952b3)
+![Vite](https://img.shields.io/badge/Vite-4.4.5-646cff)
 
 ---
 
-## 🎯 Overview
+<details>
+<summary>Overview</summary>
 
-**URL-GENius** is a GA4-tagged URL generator built with React and Bootstrap. It enables marketing teams to:
+**URL-GENius** is a GA4-tagged URL generator built with React and Bootstrap. It allows marketing teams to:
 
-- Generate UTM-tagged URLs for GA4 tracking
-- Support both OneWeb and GEP platforms
-- Create URLs for 11+ marketing channels simultaneously
-- Automatically format and validate URLs
-- Copy and deploy URLs with a single click
+* Generate UTM-tagged URLs for GA4 tracking
+* Support both OneWeb and GEP platforms
+* Create URLs for 11+ marketing channels simultaneously
+* Automatically format and validate URLs
+* Copy and deploy URLs with a single click
 
 ### Key Statistics
 
-- **11+ Marketing Channels** supported (Paid Search, Email, Social, Display Ads, QR Codes, etc.)
-- **5 Required Fields** for GA4 tagging (when not using Generic mode)
-- **Dynamic Form Validation** with real-time error feedback
-- **Mobile Responsive** design for all screen sizes
-- **Zero Dependencies** on external URL APIs (runs entirely client-side)
+* **11+ Marketing Channels** supported (Paid Search, Email, Social, Display Ads, QR Codes, etc.)
+* **5 Required Fields** for GA4 tagging (when not using Generic mode)
+* **Dynamic Form Validation** with real-time error feedback
+* **Mobile Responsive** design
+* **Runs Entirely Client-Side** (no external URL APIs required)
 
----
+</details>
 
-## ✨ Features
+<details>
+<summary>Features</summary>
 
 ### Core Functionality
 
-✅ **Dual Platform Support**
-- OneWeb (product pages with promo/pricing parameters)
-- GEP (search-based URL structure)
-- Toggle between platforms with automatic URL switching
+**Dual Platform Support**
 
-✅ **Comprehensive Marketing Channel Coverage**
-- Paid Search (Google, Bing)
-- Email (Marketo SCS, MKtg with multi-tier CTA support)
-- Paid Display Ads (AdRoll, AdAdvance, RichRelevance)
-- Social Media (Meta, Twitter, YouTube, LinkedIn)
-- QR Codes (Nxtbook, External)
-- Trade Publications
-- Website Linking Agreements
-- Telesales
-- Narvar
-- Vanity URLs
+* OneWeb (product pages with promo/pricing parameters)
+* GEP (search-based URL structure)
+* Toggle between platforms with automatic URL switching
 
-✅ **Smart Form Features**
-- Auto-populate default URLs based on platform selection
-- Real-time field validation with helpful error messages
-- Optional item code, promo code, and pricing support
-- Parse existing tagged URLs and auto-populate form fields
-- UTM campaign auto-formatting (Date-Project-JobNumber)
+**Comprehensive Marketing Channel Coverage**
 
-✅ **User Experience**
-- One-click copy all URLs
-- Individual URL copy buttons with success feedback
-- Smooth animations and transitions
-- Copy button state changes (Copy → Copied!)
-- Mobile-optimized layout with filter panel
+* Paid Search (Google, Bing)
+* Email (Marketo SCS, MKtg with multi-tier CTA support)
+* Paid Display Ads (AdRoll, AdAdvance, RichRelevance)
+* Social Media (Meta, Twitter, YouTube, LinkedIn)
+* QR Codes (Nxtbook, External)
+* Trade Publications
+* Website Linking Agreements
+* Telesales
+* Narvar
+* Vanity URLs
 
-✅ **Quality Assurance**
-- Input validation for all fields
-- Job Number format enforcement (##LL####)
-- Item code validation (7-digit numbers)
-- URL sanitization to prevent duplicates
-- Comprehensive help documentation
+**Smart Form Features**
 
----
+* Auto-populate default URLs based on platform selection
+* Real-time field validation with helpful error messages
+* Optional item code, promo code, and pricing support
+* Parse existing tagged URLs and auto-populate form fields
+* UTM campaign auto-formatting (Date-Project-JobNumber)
 
-## 🚀 Getting Started
+**User Experience**
+
+* One-click copy all URLs
+* Individual URL copy buttons with success feedback
+* Smooth animations and transitions
+* Mobile-optimized layout with filter panel
+
+**Quality Assurance**
+
+* Input validation for all fields
+* Job Number format enforcement (##LL####)
+* Item code validation (7-digit numbers)
+* URL sanitization to prevent duplicates
+* Comprehensive help documentation
+
+</details>
+
+<details>
+<summary>Getting Started</summary>
 
 ### Prerequisites
 
-- Node.js 16+ 
-- npm or yarn package manager
-- React 18+
-- Bootstrap 5+
+* Node.js 16+
+* npm or yarn
+* React 18+
+* Bootstrap 5+
 
 ### Quick Start
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd url-generator
-   ```
+```bash
+git clone <repository-url>
+cd url-generator
+npm install
+npm run dev
+```
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+Open your browser at `http://localhost:5173`
 
-3. **Start the development server**
-   ```bash
-   npm run dev
-   ```
+### Build for Production
 
-4. **Build for production**
-   ```bash
-   npm run build
-   ```
+```bash
+npm run build
+```
 
----
+</details>
 
-## 📦 Installation
+<details>
+<summary>Installation</summary>
 
 ### Dependencies
 
@@ -136,452 +129,199 @@ A modern, React-based URL generation tool for Henry Schein marketing professiona
 npm install
 ```
 
-### Optional: Add Specific Dependencies
+### Optional Dependencies
 
 ```bash
-# Bootstrap and React Bootstrap
 npm install bootstrap react-bootstrap
-
-# Icons
 npm install react-icons
-
-# Development dependencies (if needed)
 npm install --save-dev vite @vitejs/plugin-react
 ```
 
----
+</details>
 
-## 📁 Project Structure
+<details>
+<summary>Project Structure</summary>
 
 ```
 src/
 ├── components/
-│   ├── AppLayout.jsx           # Main layout wrapper
+│   ├── AppLayout.jsx
 │   ├── AppLayout.css
-│   ├── MainContent.jsx         # Content area container
+│   ├── MainContent.jsx
 │   ├── MainContent.css
-│   ├── Navigation.jsx          # Top navigation bar
+│   ├── Navigation.jsx
 │   ├── Navigation.css
-│   ├── FormSection.jsx         # Form inputs and fields
+│   ├── FormSection.jsx
 │   ├── FormSection.css
-│   ├── FilterPanel.jsx         # Channel selection filters
+│   ├── FilterPanel.jsx
 │   ├── FilterPanel.css
-│   ├── URLResults.jsx          # Generated URLs display
+│   ├── URLResults.jsx
 │   ├── URLResults.css
-│   ├── HelpModal.jsx           # Help documentation modal
+│   ├── HelpModal.jsx
 │   ├── HelpModal.css
-│   ├── FormInput.jsx           # Reusable form input components
-│   └── Footer.jsx              # Footer with branding
+│   ├── FormInput.jsx
+│   └── Footer.jsx
 ├── hooks/
-│   ├── useFormValidation.js    # Form validation logic
-│   ├── useURLGenerator.js      # URL generation engine
-│   └── useFormType.js          # Form type (OneWeb/GEP) switching
+│   ├── useFormValidation.js
+│   ├── useURLGenerator.js
+│   └── useFormType.js
 ├── data/
-│   └── urlCategories.js        # Channel definitions and UTM mappings
+│   └── urlCategories.js
 ├── utils/
-│   ├── urlHelpers.js           # URL building and sanitization
-│   └── validators.js           # Field validators
+│   ├── urlHelpers.js
+│   └── validators.js
 ├── assets/
-│   └── icon.svg                # Henry Schein logo
-├── App.jsx                     # Root component
+│   └── icon.svg
+├── App.jsx
 ├── App.css
 ├── index.css
-└── main.jsx                    # Entry point
+└── main.jsx
 ```
 
----
+</details>
 
-## 📖 Usage Guide
+<details>
+<summary>Usage Guide</summary>
 
 ### Basic Workflow
 
-1. **Select Platform**
-   - Use the toggle switch to choose OneWeb or GEP
-   - Default URL updates automatically
-
-2. **Enter Base URL** (Required)
-   - Paste or use auto-populated URL
-   - Tool validates format on input
-
-3. **Fill GA4 Fields** (Required for tagged URLs)
-   - **Date**: Campaign launch date (YYYY-MM-DD)
-   - **Project**: Campaign name (e.g., CADCAM)
-   - **Job Number**: Format ##LL#### (e.g., 24DS2828)
-   - **Division**: Select from dropdown (Dental, Medical, etc.)
-
-4. **Add Optional Details**
-   - Item codes (7-digit product codes)
-   - Promo code (OneWeb only, up to 3 chars)
-   - Keyword/description
-   - Vanity URL
-   - Vendor names (for specific channels)
-
-5. **Select Channels**
-   - Check boxes in the Filter Panel for channels you need
-   - URLs generate in real-time
-
-6. **Copy URLs**
-   - Click "Copy All" to copy everything
-   - Or click "Copy" on individual URLs
-   - Paste into your campaign tools
+1. Select Platform (OneWeb or GEP)
+2. Enter Base URL
+3. Fill GA4 Fields (Date, Project, Job Number, Division)
+4. Add optional item codes, promo codes, vanity URLs
+5. Select Channels
+6. Copy URLs individually or all at once
 
 ### Field Validation
 
-| Field | Format | Example | Required |
-|-------|--------|---------|----------|
-| Page URL | Valid URL | https://henryschein.com/search/ | Yes |
-| Item Codes | 7-digit codes, comma-separated | 5702440,1126402 | No |
-| Job Number | ##LL#### | 24DS2828 | GA4 only |
-| Promo Code | 1-3 characters | ABC | No |
-| Date | YYYY-MM-DD | 2025-01-15 | GA4 only |
+| Field      | Format        | Example                                                            | Required |
+| ---------- | ------------- | ------------------------------------------------------------------ | -------- |
+| Page URL   | Valid URL     | [https://henryschein.com/search/](https://henryschein.com/search/) | Yes      |
+| Item Codes | 7-digit codes | 5702440,1126402                                                    | No       |
+| Job Number | ##LL####      | 24DS2828                                                           | GA4 only |
+| Promo Code | 1-3 chars     | ABC                                                                | No       |
+| Date       | YYYY-MM-DD    | 2025-01-15                                                         | GA4 only |
 
-### Special Cases
+</details>
 
-**Generic URLs**
-- Generate without GA4 fields
-- Useful for quick links or testing
-- Still include item codes and promo codes if provided
-
-**Marketo Email Campaigns**
-- Requires Marketo Folder Name
-- Replaces utm_campaign parameter
-- Format: EM-YYYYMMDD-CampaignName-ID-State-Division
-
-**QR Codes**
-- Specify QR Code Content (product name)
-- Generates utm_content from your input
-- Link to [Adobe QR Generator](https://new.express.adobe.com/tools/generate-qr-code)
-
----
-
-## 🔧 Component Documentation
+<details>
+<summary>Component Documentation</summary>
 
 ### App.jsx
-**Root component managing global state**
 
-- Initializes form data with defaults
-- Manages selected channel groups
-- Coordinates URL generation
-- Handles copy-to-clipboard functionality
-
-**Key Props:**
-- `formData`: Current form values
-- `selectedGroups`: Selected channel checkboxes
-- `generatedUrls`: Generated URL output
+* Root component managing global state
+* Initializes form data, selected channels
+* Coordinates URL generation
+* Handles copy-to-clipboard
 
 ### useURLGenerator Hook
-**Core URL generation logic**
 
-```javascript
-const { generatedUrls, generateURLs } = useURLGenerator(formData, selectedGroups);
-```
-
-**Returns:**
-- `generatedUrls`: Array of URL groups by category
-- `generateURLs`: Function to trigger URL generation
-
-**Features:**
-- Validates required fields before generating
-- Handles special cases (Marketo, QR codes, etc.)
-- Formats URLs with proper UTM parameters
-- Sanitizes output
+* Core URL generation logic
+* Validates fields, handles special cases, formats URLs
+* Returns `generatedUrls` array and `generateURLs` function
 
 ### useFormValidation Hook
-**Form state and validation management**
 
-```javascript
-const { formData, errors, handleInputChange, setFormData } = useFormValidation(initialData);
-```
-
-**Validates:**
-- URL format
-- Item code format (7 digits)
-- Job Number format (##LL####)
-- Promo code length (≤3 chars)
+* Manages form state and validation
+* Validates URL, item codes, job numbers, promo codes
 
 ### useFormType Hook
-**OneWeb ↔ GEP switching logic**
 
-- Updates form type state
-- Manages platform-specific URL defaults
-- Triggers URL regeneration on switch
+* Handles OneWeb ↔ GEP switching
+* Updates defaults and regenerates URLs
 
 ### URLResults Component
-**Displays generated URLs with copy functionality**
 
-**Features:**
-- Grouped by marketing channel
-- Individual and bulk copy buttons
-- Copy state animations
-- Click-to-copy URL display
-- Responsive layout
+* Displays generated URLs grouped by channel
+* Supports individual and bulk copy
+* Responsive layout
 
 ### HelpModal Component
-**Comprehensive documentation modal**
-
-**Includes:**
-- 14 detailed FAQs
-- Quick start guide
-- Marketing channel reference
-- Field validation examples
-- Best practices
-- External GA4 resources
-
----
-
-## ⚙️ Configuration
-
-### URL Categories
-Edit `src/data/urlCategories.js` to:
-- Add new marketing channels
-- Modify UTM parameters
-- Update tier-2 subcategories (e.g., email CTAs)
-- Change content UTM values
-
-**Example: Adding a New Channel**
-```javascript
-{
-  category: "New Channel Name",
-  key: "NewChannelKey",
-  subcategories: [
-    {
-      name: "Channel Variant",
-      key: "NewChannelVariant",
-      urls: ["utm_source=NewSource&utm_medium=Channel"],
-      contentutm: ["VariantName"]
-    }
-  ]
-}
-```
-
-### Form Validation
-Edit `src/utils/validators.js` to:
-- Add new field validators
-- Modify regex patterns
-- Change error messages
-
-**Example: Add Custom Validator**
-```javascript
-export const validators = {
-  customField: (value) => {
-    return !value || /your-regex/.test(value) 
-      ? null 
-      : "Your error message";
-  }
-};
-```
-
-### Default Values
-Edit initial form data in `App.jsx`:
-```javascript
-const initialFormData = {
-  pageUrl: 'https://www.henryschein.com/en-us/search/',
-  formType: 'gep',
-  division: 'dental',
-  // ... other defaults
-};
-```
-
----
-
-## 🐛 Troubleshooting
-
-### URLs Not Generating
-
-**Issue:** URLs section shows "No URLs generated yet"
-
-**Solutions:**
-1. ✅ Ensure Page URL is filled
-2. ✅ For GA4 URLs, fill all required fields: Date, Project, Job Number, Division
-3. ✅ Check at least one channel is selected in Filters
-4. ✅ For Email channels, fill Marketo Folder Name
-5. ✅ For QR Code channels, fill QR Code Content
-6. ✅ Open browser console (F12) to check for errors
-
-### Form Type Switch Not Working
-
-**Issue:** Switching OneWeb/GEP doesn't update URLs
-
-**Solutions:**
-1. ✅ Check browser console for errors
-2. ✅ Ensure formType is properly updating
-3. ✅ Try refreshing the page
-4. ✅ Clear browser cache
-
-### Last Character Cut Off
-
-**Issue:** Promo code missing last character in URL
-
-**Solutions:**
-1. ✅ Clear form and try again
-2. ✅ Ensure promo code is ≤3 characters
-3. ✅ Check for trailing spaces in input
-
-### Copy Button Not Working
 
-**Issue:** Copy to clipboard fails
+* Comprehensive documentation modal
+* Includes 14 FAQs, quick start, field validation examples
 
-**Solutions:**
-1. ✅ Check browser supports clipboard API (all modern browsers)
-2. ✅ Ensure HTTPS is used (required for clipboard API)
-3. ✅ Try copying individual URLs instead of "Copy All"
+</details>
 
-### Validation Errors Persist
+<details>
+<summary>Configuration</summary>
 
-**Issue:** Error messages won't clear
+* Edit `src/data/urlCategories.js` to add channels or modify UTM parameters
+* Edit `src/utils/validators.js` to add or change field validators
+* Set default form values in `App.jsx`
 
-**Solutions:**
-1. ✅ Clear the field completely
-2. ✅ Re-enter valid value
-3. ✅ Refresh page if error persists
+</details>
 
----
+<details>
+<summary>Troubleshooting</summary>
 
-## 🔮 Future Enhancements
+* URLs not generating → Check required fields and selected channels
+* Form type switch not updating → Ensure `formType` state changes
+* Copy button not working → Ensure HTTPS and modern browser support
+* Validation errors → Clear and re-enter fields, refresh page
 
-### Planned Features
+</details>
 
-- [ ] **URL History**: Save recently generated URLs
-- [ ] **Templates**: Save and reuse campaign configurations
-- [ ] **Bulk URL Generation**: Upload CSV of campaigns
-- [ ] **Analytics Integration**: Direct GA4 dashboard link
-- [ ] **URL Preview**: Visual preview of final URLs
-- [ ] **Dark Mode**: Theme toggle
-- [ ] **Multi-language**: Internationalization support
-- [ ] **Advanced Analytics**: Track tool usage patterns
-- [ ] **Batch Export**: Export URLs to multiple formats (CSV, JSON)
-- [ ] **Custom UTM Parameters**: Add proprietary parameters
-- [ ] **Campaign Templates**: Pre-built configurations
-- [ ] **Team Collaboration**: Share campaign configurations
+<details>
+<summary>Future Enhancements</summary>
 
-### Enhancement Roadmap
+* URL History with local storage
+* Templates for campaign reuse
+* Bulk URL generation via CSV
+* Analytics integration with GA4
+* Dark Mode toggle
+* Multi-language support
+* Batch export (CSV, JSON)
+* Team collaboration features
 
-**Phase 1 (Near-term)**
-- URL history with local storage
-- Basic analytics integration
+</details>
 
-**Phase 2 (Mid-term)**
-- Template system
-- CSV bulk import
-- Dark mode
+<details>
+<summary>Support</summary>
 
-**Phase 3 (Long-term)**
-- Advanced analytics dashboard
-- Team collaboration features
-- API integration
+* In-app help modal
+* Field tooltips
+* Validation messages
+* GA4 resources: [Google Analytics Help Center](https://support.google.com/analytics/answer/10917952)
+* Report bugs with steps to reproduce, browser info, and screenshots
 
----
+</details>
 
-## 📝 Best Practices
+<details>
+<summary>License & Contributors</summary>
 
-### URL Generation
+* Henry Schein Internal Use Only
+* **Original HTML Version:** Trevor Smith
+* **React Conversion & Enhancement:** Trevor Smith
+* **Design & UX:** Trevor Smith
 
-1. **Consistency**: Use same Job Number, Project, Date for all URLs in a campaign
-2. **Testing**: Test one URL first before deploying batch
-3. **Documentation**: Keep campaign details for future reference
-4. **Channel Alignment**: Ensure URL channel matches actual placement
-5. **GA4 Monitoring**: Check GA4 dashboard after launch to verify tracking
+</details>
 
-### Field Entry
+<details>
+<summary>Changelog</summary>
 
-1. **Job Numbers**: Follow format strictly (##LL####) for proper analytics
-2. **Promo Codes**: Keep concise (1-3 characters)
-3. **Project Names**: Use meaningful, consistent naming conventions
-4. **Item Codes**: Verify codes before entry
-5. **Dates**: Always use campaign launch date for consistency
+### Version 2.0.0 (React)
 
-### Campaign Management
+* Complete React rewrite
+* Improved mobile responsiveness
+* New Help modal with 14 FAQs
+* Enhanced animations and UX
+* Better form validation
+* Streamlined navigation
+* Fixed copy button animations
+* Fixed form type switching
+* Fixed promo code truncation
 
-1. Archive old campaigns after completion
-2. Review GA4 data regularly
-3. Adjust future campaigns based on performance
-4. Document any custom parameters used
-5. Train team members on tool usage
+### Version 1.0.0 (Legacy HTML)
 
----
+* Original HTML/jQuery implementation
+* Core URL generation functionality
+* Basic channel support
+* Manual validation
 
-## 🤝 Support
+</details>
 
-### Getting Help
-
-1. **In-App Help**: Click "Help" in navigation for comprehensive documentation
-2. **Field Tooltips**: Hover over labels for field descriptions
-3. **Validation Messages**: Read error messages carefully for guidance
-4. **GA4 Resources**: Visit [Google Analytics Help Center](https://support.google.com/analytics/answer/10917952)
-
-### Reporting Issues
-
-When reporting bugs, include:
-- Steps to reproduce
-- Expected vs. actual behavior
-- Browser and OS information
-- Console error messages (F12 → Console)
-- Screenshots if applicable
-
-### Feature Requests
-
-Submit feature requests with:
-- Use case description
-- Expected user benefit
-- Proposed implementation (if applicable)
-- Priority level (High/Medium/Low)
-
----
-
-## 📄 License
-
-Henry Schein Internal Use Only
-
----
-
-## 👥 Contributors
-
-- **Original HTML Version**: Trevor Smith
-- **React Conversion & Enhancement**: Trevor Smith
-- **Design & UX**: Trevor Smith
-
----
-
-
-## 🗺️ Changelog
-
-### Version 2.0.0 (Current - React)
-- ✨ Complete React rewrite
-- ✨ Improved mobile responsiveness
-- ✨ New Help modal with 14 FAQs
-- ✨ Enhanced animations and UX
-- ✨ Better form validation
-- ✨ Streamlined navigation
-- 🐛 Fixed copy button animations
-- 🐛 Fixed form type switching
-- 🐛 Fixed promo code truncation
-
-### Version 1.0.0 (Legacy - HTML)
-- Original HTML/jQuery implementation
-- Core URL generation functionality
-- Basic channel support
-- Manual validation
-
----
-
-## 📚 Additional Resources
-
-### GA4 Documentation
-- [UTM Parameters Guide](https://support.google.com/analytics/answer/10917952)
-- [GA4 Setup Guide](https://support.google.com/analytics/answer/9304153)
-- [GA4 Reports](https://support.google.com/analytics/answer/10337382)
-
-### React Documentation
-- [React Hooks](https://react.dev/reference/react)
-- [React Bootstrap](https://react-bootstrap.github.io/)
-- [Bootstrap Documentation](https://getbootstrap.com/docs/)
-
-### Related Tools
-- [Google URL Builder](https://ga-dev-tools.web.app/ga4/campaign-url-builder/)
-
-
-
----
-
-**Last Updated**: January 2025
-**Current Version**: 2.0.0
+<div align="center">
+URL-GENius - Generate GA4-tagged URLs efficiently.  
+Built with React and Bootstrap
+</div>
