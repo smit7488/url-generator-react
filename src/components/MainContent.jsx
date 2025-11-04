@@ -25,7 +25,7 @@ const MainContent = ({
 
         {/* Form Section */}
         <Container fluid className="p-0 ">
-          <Card className="rounded-0 border-0 app-form background-secondary">
+          <Card className="rounded-0 border-0 background-secondary">
             <Card.Body className="p-4">
                              
               <FormSection
@@ -40,7 +40,7 @@ const MainContent = ({
 
           {/* Generated URLs with smooth entrance */}
           {isFormValid && generatedUrls.length > 0 && (
-            <div className="mt-4 animate-fade-in">
+            <div className="mt-2 animate-fade-in">
               <URLResults urls={generatedUrls} onCopyAll={onCopyAll} />
             </div>
           )}

@@ -173,10 +173,10 @@ h2 {
 }
 
 /* Hover effects */
-.card:hover {
+/* .card:hover {
   transform: translateY(-2px);
   transition: transform 0.2s ease-in-out;
-}
+} */
 
 /* Modern button styles */
 .btn {
@@ -213,10 +213,10 @@ h2 {
   cursor: pointer;
   user-select: none;
 }
-
+/* 
 .card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+} */
 
 .rounded {
   border-radius: 0.25em;

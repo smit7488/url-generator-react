@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
 import { Card, Alert, Container } from 'react-bootstrap';
+import './URLResults.css';
 
 const URLResults = ({ urls, onCopyAll }) => {
   const [allCopied, setAllCopied] = useState(false);
-
-  console.log('URLResults rendering with:', urls);
-  // ADD THIS LINE to see what's actually in the URLs
-  console.log('First URL object:', urls.length > 0 ? urls[0] : 'empty');
-  if (urls.length > 0 && urls[0].urls.length > 0) {
-    console.log('First actual URL:', urls[0].urls[0].url);
-  }
-
-  console.log('URLResults rendering with:', urls);
+  const [copiedUrlIndex, setCopiedUrlIndex] = useState(null);
 
   const handleCopyAll = async () => {
     if (urls.length === 0) return;
@@ -24,9 +17,18 @@ const URLResults = ({ urls, onCopyAll }) => {
       await navigator.clipboard.writeText(text);
       setAllCopied(true);
       setTimeout(() => setAllCopied(false), 2000);
-      onCopyAll && onCopyAll();
     } catch (err) {
       console.error('Failed to copy text: ', err);
+    }
+  };
+
+  const handleCopyIndividual = async (urlText, index) => {
+    try {
+      await navigator.clipboard.writeText(urlText);
+      setCopiedUrlIndex(index);
+      setTimeout(() => setCopiedUrlIndex(null), 1500);
+    } catch (err) {
+      console.error('Failed to copy:', err);
     }
   };
 
@@ -63,20 +65,11 @@ const URLResults = ({ urls, onCopyAll }) => {
               </p>
             </div>
             <button 
-              className={`btn ${allCopied ? 'btn-success' : 'btn-primary'} d-flex align-items-center`}
+              className={`btn ${allCopied ? 'btn-success' : 'btn-primary'} d-flex align-items-center copy-all-btn`}
               onClick={handleCopyAll}
             >
-              {allCopied ? (
-                <>
-                  <i className="fas fa-check me-2"></i>
-                  All Copied!
-                </>
-              ) : (
-                <>
-                  <i className="fas fa-copy me-2"></i>
-                  Copy All
-                </>
-              )}
+              <i className={`fas ${allCopied ? 'fa-check' : 'fa-copy'} me-2 copy-icon`}></i>
+              <span className="copy-text">{allCopied ? 'All Copied!' : 'Copy All'}</span>
             </button>
           </div>
 
@@ -89,33 +82,39 @@ const URLResults = ({ urls, onCopyAll }) => {
                   </h5>
                   <span className="badge bg-primary">{group.urls.length} URLs</span>
                 </div>
-                {group.urls.map((urlObj, urlIndex) => (
-                  <div key={urlIndex} className="mb-3">
-                    <div className="d-flex justify-content-between align-items-center mb-2">
-                      <h6 className="text-secondary small fw-semibold mb-0">{urlObj.name}</h6>
-                      <button
-                        onClick={() => navigator.clipboard.writeText(urlObj.url)}
-                        className="btn btn-sm btn-outline-primary"
-                        style={{ fontSize: '0.75rem' }}
+                {group.urls.map((urlObj, urlIndex) => {
+                  const globalIndex = `${groupIndex}-${urlIndex}`;
+                  const isCopied = copiedUrlIndex === globalIndex;
+                  
+                  return (
+                    <div key={urlIndex} className="mb-3">
+                      <div className="d-flex justify-content-between align-items-center mb-2">
+                        <h6 className="text-secondary small fw-semibold mb-0">{urlObj.name}</h6>
+                        <button
+                          onClick={() => handleCopyIndividual(urlObj.url, globalIndex)}
+                          className={`btn btn-sm ${isCopied ? 'btn-success' : 'btn-outline-primary'} copy-btn`}
+                          style={{ fontSize: '0.75rem' }}
+                        >
+                          <i className={`fas ${isCopied ? 'fa-check' : 'fa-copy'} me-1`}></i>
+                          {isCopied ? 'Copied!' : 'Copy'}
+                        </button>
+                      </div>
+                      <div 
+                        className="p-3 bg-light rounded border url-display"
+                        style={{ 
+                          fontSize: '0.8rem', 
+                          wordBreak: 'break-all',
+                          fontFamily: 'Monaco, Consolas, monospace',
+                          cursor: 'pointer'
+                        }}
+                        onClick={() => handleCopyIndividual(urlObj.url, globalIndex)}
+                        title="Click to copy"
                       >
-                        <i className="fas fa-copy me-1"></i>
-                        Copy
-                      </button>
+                        {urlObj.url}
+                      </div>
                     </div>
-                    <div 
-                      className="p-3 bg-light rounded border"
-                      style={{ 
-                        fontSize: '0.8rem', 
-                        wordBreak: 'break-all',
-                        fontFamily: 'Monaco, Consolas, monospace',
-                        cursor: 'pointer'
-                      }}
-                      onClick={() => navigator.clipboard.writeText(urlObj.url)}
-                    >
-                      {urlObj.url}
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ))}
           </div>

@@ -20,7 +20,7 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
         {/* Dynamic Page URL Label and Help Text */}
  <Row className="g-3 mb-4">
      <Col xl={9} md={8}>
-    <div className="mb-2"><h2 className="h3 fw-bold text-primary mb-2">Let's Tag Some URLs!</h2><p className="text-muted">Fill in the details below to generate tagged URLs for your campaign</p></div>
+    <div className="mb-2"><h2 className="h3 fw-bold text-primary-dark mb-2">Let's Tag Some URLs!</h2><p className="text-muted">Fill in the details below to generate tagged URLs for your campaign</p></div>
     </Col>
 
   <Col xl={3} md={4}>
