@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar, Container, Nav, Offcanvas, Row, Col } from 'react-bootstrap';
 import { FaGoogle, FaBars, FaFilter } from 'react-icons/fa'; 
 import urlIcon from '../assets/icon.svg'
+import './Navigation.css';
 
 const HenryScheinLogo = () => (
   <img 
@@ -19,7 +20,7 @@ const Navigation = ({ onToggleFilters }) => {
   return (
     <Navbar 
       expand={expandBreakpoint} 
-      className="shadow-lg bg-white border-bottom" 
+      className="shadow-sm bg-white border-bottom" 
       sticky="top"
       data-bs-theme="light"
     >
@@ -30,7 +31,7 @@ const Navigation = ({ onToggleFilters }) => {
           <Col xs={6} lg={3} className="d-flex align-items-center">
             <div className="logo-wrapper d-flex align-items-center me-3">
                 <Navbar.Brand href="/" className="d-flex align-items-center logo p-0">
-                    <HenryScheinLogo /><h1 className="logo-text fw-bold text-lg text-gray-800 m-0">
+                    <HenryScheinLogo /><h1 className="logo-text fw-bold text-lg text-gray-800 m-0 d-none d-sm-block">
                     URL-GENius
                 </h1>
                 </Navbar.Brand>

@@ -1,0 +1,24 @@
+footer.footer {
+  background: var(--primary-color-dark);
+  border-top: .25rem solid var(--secondary-color);
+  padding: 4rem 1rem;
+}
+
+.powered-by {
+  font-size: .675rem;
+  margin-bottom: .5rem;
+  color: var(--lightest-color);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .2rem;
+}
+
+.logo-wrap {
+  display: flex;
+  padding-bottom: 1rem;
+  justify-content: center;
+}
+
+.logo-wrap img {
+  max-width: 200px;
+}

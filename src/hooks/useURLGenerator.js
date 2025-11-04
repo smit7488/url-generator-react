@@ -1,30 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { urlCategories } from '../data/urlCategories';
 import { buildURL } from '../utils/urlHelpers';
 
 export const useURLGenerator = (formData, selectedGroups) => {
   const [generatedUrls, setGeneratedUrls] = useState([]);
 
-  useEffect(() => {
-    generateURLs();
-  }, [formData, selectedGroups]);
-
-  const generateURLs = () => {
+  const generateURLs = useCallback(() => {
     if (!formData.pageUrl) {
-      setGeneratedUrls([]);
-      return;
-    }
-
-    // Check if we should generate URLs (Generic doesn't require all fields)
-    const shouldGenerateGeneric = selectedGroups.Generic && formData.pageUrl;
-    const shouldGenerateTagged = !selectedGroups.Generic && 
-      formData.pageUrl && 
-      formData.date && 
-      formData.project && 
-      formData.jobNumber && 
-      formData.division;
-
-    if (!shouldGenerateGeneric && !shouldGenerateTagged) {
       setGeneratedUrls([]);
       return;
     }
@@ -39,15 +21,48 @@ export const useURLGenerator = (formData, selectedGroups) => {
     const division = formData.division;
     const pricing = formData.pricing;
     const vanity = formData.vanity.split('/').pop() || '';
-    const dateProjectJob = `&utm_campaign=${date}-${project}-${jobNumber}`;
+    const dateProjectJob = `utm_campaign=${date}-${project}-${jobNumber}`;
     const isHenrySchein = baseUrl.includes('henryschein');
+    const formType = formData.formType;
+
+    // Check if we have minimum required fields for tagged URLs
+    const hasRequiredUTMFields = date && project && jobNumber && division;
 
     urlCategories.forEach(group => {
-      // Skip if requirements aren't met
+      // For Generic URLs, ALWAYS generate if we have a base URL
+      if (group.key === "Generic") {
+        const categoryUrls = [];
+        group.subcategories.forEach(sub => {
+          if (selectedGroups[sub.key]) {
+            const url = buildURL(baseUrl, {
+              items,
+              promo,
+              pricing,
+              urlPart: sub.urls[0],
+              dateProjectJob: '',
+              contentUtm: '',
+              division: '',
+              formType,
+              isGeneric: true,
+              isHenrySchein
+            });
+            categoryUrls.push({ subcategory: sub.name, name: sub.name, url });
+          }
+        });
+        if (categoryUrls.length > 0) {
+          urls.push({ category: group.category, urls: categoryUrls });
+        }
+        return; // Exit early for Generic, don't apply UTM checks
+      }
+
+      // For all other groups, check requirements
       if (group.requiresMarketo && !formData.marketoFolderName) return;
       if (group.requiresQRContent && !formData.qrCodeContent) return;
       if (group.requiresVendorName && !formData.webLinkVendorName) return;
       if (group.requiresTradePub && !formData.tradePublicationName) return;
+      
+      // For non-generic URLs, check if required UTM fields are filled
+      if (!hasRequiredUTMFields) return;
 
       const categoryUrls = [];
 
@@ -71,21 +86,21 @@ export const useURLGenerator = (formData, selectedGroups) => {
             finalContentUtm = formData.qrCodeContent.replace(/\s/g, '');
           }
 
-          // Use Marketo campaign if required, otherwise use date-based campaign
+          // Use Marketo campaign if required
           const campaignString = group.requiresMarketo 
             ? `&utm_campaign=${formData.marketoFolderName}`
-            : (dateProjectJob.includes('undefined') ? '' : dateProjectJob);
+            : `&${dateProjectJob}`;
 
           return buildURL(baseUrl, {
             items,
             promo,
             pricing,
             urlPart: finalUrlPart,
-            dateProjectJob: group.key === "Generic" ? '' : campaignString,
-            contentUtm: group.key === "Generic" ? '' : finalContentUtm,
+            dateProjectJob: campaignString,
+            contentUtm: finalContentUtm,
             division: group.key === "Generic" ? '' : division,
-            formType: formData.formType,
-            isGeneric: group.key === "Generic",
+            formType,
+            isGeneric: false,
             isHenrySchein
           });
         };
@@ -109,7 +124,10 @@ export const useURLGenerator = (formData, selectedGroups) => {
     });
 
     setGeneratedUrls(urls);
-  };
+  }, [formData, selectedGroups]);
 
+  // Generate URLs whenever formData or selectedGroups change
+  // This is key: useCallback dependency array ensures generateURLs is updated
+  // whenever these dependencies change, and the effect will re-run
   return { generatedUrls, generateURLs };
 };

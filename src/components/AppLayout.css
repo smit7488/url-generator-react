@@ -1,0 +1,35 @@
+.right-column {
+  flex: 1;
+  margin-left: 280px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.mobile-filter-overlay {
+  display: none;
+}
+
+@media (max-width: 991.98px) {
+  .right-column {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .mobile-filter-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+  }
+}
+
+@media (min-width: 992px) {
+  .mobile-filter-overlay {
+    display: none !important;
+  }
+}

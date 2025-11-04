@@ -1,13 +1,15 @@
 // Sanitize URL by removing duplicate '&' and trailing '&' or '?'
 function sanitizeURL(url) {
+  if (!url.includes('?')) return url;
+  
   let [base, queryString] = url.split('?');
   if (queryString) {
+    // Remove duplicate & and clean up
     queryString = queryString
-      .split('&')
-      .filter(param => param) // Remove empty parameters
-      .join('&');
-    if (queryString.endsWith('&')) queryString = queryString.slice(0, -1);
-    if (queryString.endsWith('?')) queryString = queryString.slice(0, -1);
+      .replace(/&+/g, '&') // Replace multiple & with single &
+      .replace(/^&|&$/g, '') // Remove leading/trailing &
+      .replace(/\?+$/g, ''); // Remove trailing ?
+    
     return queryString ? `${base}?${queryString}` : base;
   }
   return base;
@@ -29,87 +31,80 @@ export const buildURL = (baseUrl, options) => {
 
   let finalUrl = '';
   let base = baseUrl;
-  let queryStart = base.includes('?') ? '&' : '?';
+  const hasExistingParams = base.includes('?');
+  let queryParams = [];
 
-  // Handle Generic (Untagged) URLs
+  // Handle Generic (Untagged) URLs - ALWAYS generate these
   if (isGeneric) {
     if (isHenrySchein) {
-      if (formType === 'gep' && items !== '') {
+      if (formType === 'gep' && items) {
+        // GEP format: /search/"item1""item2""item3"
         const formattedItems = items.split(',').map(code => `%22${code}%22`).join('');
         base = base.replace(/\/search\/?$/, `/search/${formattedItems}`);
-        finalUrl = base + queryStart + 'type=products&exactsearch=false';
-      } else {
-        finalUrl = base + queryStart;
-        if (items !== '') {
-          finalUrl += `productid=${items}`;
-        }
+        queryParams.push('type=products', 'exactsearch=false');
+      } else if (items) {
+        queryParams.push(`productid=${items}`);
       }
 
       // Add promo and pricing for OneWeb
       if (formType === 'oneweb') {
-        if (promo !== '' && finalUrl.includes('?')) {
-          finalUrl += `&promocode=${promo.toUpperCase()}`;
+        if (promo) {
+          queryParams.push(`promocode=${promo}`);
         }
-        if (pricing !== 'dp=false' && pricing !== '' && finalUrl.includes('?')) {
-          finalUrl += `&${pricing}`;
+        if (pricing && pricing !== 'dp=false') {
+          queryParams.push(pricing);
         }
       }
-    } else {
-      finalUrl = base;
     }
 
-    return sanitizeURL(finalUrl.toLowerCase().replace(/promocode=[^&]*/i, promo ? `promocode=${promo.toUpperCase()}` : ''));
+    // Build final URL
+    finalUrl = queryParams.length > 0 ? `${base}?${queryParams.join('&')}` : base;
+    return sanitizeURL(finalUrl);
   }
 
   // Handle Tagged URLs
   if (isHenrySchein) {
-    if (formType === 'gep' && items !== '') {
+    if (formType === 'gep' && items) {
+      // GEP format: /search/"item1""item2""item3"
       const formattedItems = items.split(',').map(code => `%22${code}%22`).join('');
       base = base.replace(/\/search\/?$/, `/search/${formattedItems}`);
-      finalUrl = base + queryStart + 'type=products&exactsearch=false&';
-    } else {
-      finalUrl = base + queryStart;
-      if (items !== '') {
-        finalUrl += `productid=${items}&`;
-      }
+      queryParams.push('type=products', 'exactsearch=false');
+    } else if (items) {
+      queryParams.push(`productid=${items}`);
     }
 
     // Add promo and pricing
-    if (promo !== '') {
-      finalUrl += `promocode=${promo.toUpperCase()}&`;
+    if (promo) {
+      queryParams.push(`promocode=${promo}`);
     }
-    if (pricing !== 'dp=false' && pricing !== '' && formType === 'oneweb') {
-      finalUrl += `${pricing}&`;
+    if (pricing && pricing !== 'dp=false' && formType === 'oneweb') {
+      queryParams.push(pricing);
     }
-  } else {
-    finalUrl = base + queryStart;
   }
 
-  // Add UTM parameters
-  if (urlPart !== '') {
-    finalUrl += urlPart;
+  // Add UTM parameters from urlPart
+  if (urlPart) {
+    const utmParams = urlPart.split('&').filter(param => param);
+    queryParams.push(...utmParams);
   }
 
   // Add campaign
-  if (dateProjectJob !== '' && !dateProjectJob.includes('undefined')) {
-    finalUrl += dateProjectJob;
+  if (dateProjectJob && !dateProjectJob.includes('undefined')) {
+    const campaignParams = dateProjectJob.replace(/^&/, '').split('&').filter(param => param);
+    queryParams.push(...campaignParams);
   }
 
   // Add content
-  if (contentUtm !== '') {
-    finalUrl += `&utm_content=${contentUtm}`;
+  if (contentUtm) {
+    queryParams.push(`utm_content=${contentUtm}`);
   }
 
   // Add division
-  if (division !== '') {
-    finalUrl += `&utm_term=${division}&cdivid=${division}`;
+  if (division) {
+    queryParams.push(`utm_term=${division}`, `cdivid=${division}`);
   }
 
-  // Normalize to lowercase but keep promo code uppercase
-  finalUrl = finalUrl.toLowerCase();
-  if (promo) {
-    finalUrl = finalUrl.replace(/promocode=[^&]*/i, `promocode=${promo.toUpperCase()}`);
-  }
-
+  // Build final URL
+  finalUrl = queryParams.length > 0 ? `${base}?${queryParams.join('&')}` : base;
   return sanitizeURL(finalUrl);
 };

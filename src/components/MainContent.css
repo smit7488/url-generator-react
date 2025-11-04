@@ -1,0 +1,111 @@
+/* Content column inside right column */
+.content-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Main content scrollable area */
+.main-content-scrollable {
+  flex: 1;
+  overflow-y: auto; /* Ensure this is auto */
+  display: flex;
+  flex-direction: column;
+}
+
+
+.app-form {
+    min-height: calc(100vh - 60px);
+}
+
+.form {
+  background-color: var(--lightest-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow-secondary);
+  margin: 6rem auto 2rem;
+  max-width: 1200px;
+}
+
+.form-container {
+  padding: 2em;
+}
+
+.form-container-2 {
+  display: flex;
+  column-gap: 2em;
+  flex-direction: row-reverse;
+}
+
+.left-flex {
+  flex: 3;
+}
+
+.right-flex {
+  flex: 1;
+  background: var(--background-color-secondary);
+  border-radius: var(--border-radius-secondary);
+  overflow: hidden;
+}
+
+.right-flex-inner {
+  line-height: 1.25em !important;
+  overflow: hidden;
+}
+
+h2.filters {
+  margin: 0;
+  padding: .75rem 1rem .5rem;
+  font-weight: 600;
+  background: var(--background-color-tertiary);
+  font-size: 1.25rem;
+}
+
+.absolute-div {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  gap: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.radio-wrapper {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.radio-wrapper label {
+  display: flex;
+  justify-content: flex-start;
+  gap: .25rem;
+  align-items: center;
+}
+
+.radio-wrapper input radio {
+  width: 1rem;
+  height: 1rem;
+}
+
+@media (max-width: 991.98px) {
+  .content-column .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .content-column .card-body.p-4 {
+    padding: 1rem !important;
+  }
+}
+
+@media only screen and (max-width:999px) {
+  h2.filters {
+    text-align: center;
+  }
+}

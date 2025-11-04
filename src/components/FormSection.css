@@ -1,0 +1,16 @@
+/* FormSection specific styles can go here if needed */
+/* Most form styles are handled by Bootstrap and globals.css *//* Modern toggle switch */
+.form-type-switch {
+  width: 40px !important;
+  height: 20px !important;
+  cursor: pointer;
+}
+
+.form-type-switch:checked {
+  background-color: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
+}
+
+.form-type-switch:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 114, 188, 0.25) !important;
+}

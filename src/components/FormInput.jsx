@@ -17,7 +17,7 @@ const FormInput = ({ label, name, value, onChange, error, helpText, type = "text
   </div>
 );
 
-export const SelectInput = ({ label, name, value, onChange, options, required = false, className = "col-md-4" }) => (
+export const SelectInput = ({ label, name, value, onChange, options, required = false, className = "" }) => (
   <div className={className}>
     <label className="form-label fw-bold text-primary-dark">
       {required && '*'}{label}

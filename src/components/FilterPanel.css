@@ -1,0 +1,236 @@
+.filter-column {
+  width: 280px;
+  min-width: 280px;
+  background: white;
+  border-right: var(--border-secondary);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-header-desktop {
+  padding: 1.5rem 1rem 1rem;
+  background: white;
+  border-bottom: var(--border-secondary);
+  position: sticky;
+  top: 0;
+  z-index: 1001;
+  flex-shrink: 0;
+}
+
+.filter-header-desktop h5 {
+  color: var(--text-color-primary);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.filter-header-mobile {
+  display: none;
+  padding: 1rem;
+  background: white;
+  border-bottom: var(--border-secondary);
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1001;
+}
+
+.filter-header-mobile h5 {
+  color: var(--text-color-primary);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.filter-panel {
+  background: white;
+  border: none;
+  border-radius: 0;
+  flex: 1;
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+}
+
+.filter-panel-body {
+  flex: 1;
+  overflow-x: hidden;
+  padding: 0 1rem 1rem;
+}
+
+.filter-category {
+  padding: 0.75rem 0;
+  border-bottom: var(--border);
+}
+
+.filter-category:last-child {
+  border-bottom: none;
+}
+
+.filter-category-title {
+  font-size: 14px;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  color: var(--text-color-primary);
+  font-weight: 600;
+}
+
+.filter-header-desktop {
+    min-height: 63px;
+}
+
+
+.filter-label-size-0 {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.filter-label-size-1 {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+#group-checkboxes {
+  display: flex;
+  margin-top: 0.75em;
+  flex-wrap: wrap;
+  gap: 0;
+  align-items: baseline;
+  flex-direction: column;
+  align-items: normal;
+}
+
+#group-checkboxes label {
+  display: flex;
+}
+
+.custom-dropdown {
+  display: flex;
+  align-items: center;
+}
+
+.arrow {
+  margin-left: 5px !important;
+  transition: transform 0.3s ease-in-out;
+  font-size: .7rem;
+  position: absolute;
+  right: 1em;
+  cursor: pointer;
+}
+
+.dropdown-parent {
+  color: var(--text-color-primary);
+  margin: 0;
+  font-weight: 600;
+}
+
+p.dropdown-parent {
+  padding-right: 0.5em;
+  text-align: left;
+  font-size: .9rem;
+}
+
+p.dropdown-parent.subparent {
+  font-size: .825rem;
+}
+
+p.dropdown-parent.category {
+  font-size: .875rem;
+}
+
+.dropdown-wrapper, .no-dropdown {
+  width: auto;
+  max-width: 100%;
+  padding: 0.5em 1em;
+  position: relative;
+}
+
+.nested {
+  padding: 0;
+  border: hidden !important;
+}
+
+.customSubcategories {
+  margin-left: 1em;
+  margin-top: .25rem;
+}
+
+.customSubcategories label {
+  font-size: .825rem;
+}
+
+/* Scrollbars */
+.filter-panel-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.filter-panel-body::-webkit-scrollbar-track {
+  background: var(--background-color-secondary);
+}
+
+.filter-panel-body::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 3px;
+}
+
+.filter-panel-body::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color-dark);
+}
+
+.filter-column::-webkit-scrollbar {
+  width: 6px;
+}
+
+.filter-column::-webkit-scrollbar-track {
+  background: var(--background-color-secondary);
+}
+
+.filter-column::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 3px;
+}
+
+.filter-column::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color-dark);
+}
+
+/* Mobile Responsive */
+@media (max-width: 991.98px) {
+  .filter-column {
+    transform: translateX(-100%);
+    z-index: 999;
+    box-shadow: var(--box-shadow);
+  }
+  
+  .filter-column.mobile-filter-open {
+    transform: translateX(0);
+  }
+  
+  .filter-header-mobile {
+    display: flex;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .filter-column {
+    width: 300px;
+    max-width: 90vw;
+  }
+}
+
+@media (min-width: 992px) {
+  .filter-header-desktop {
+    display: block;
+  }
+  
+  .filter-header-mobile {
+    display: none;
+  }
+}

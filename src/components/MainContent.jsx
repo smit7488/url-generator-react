@@ -1,9 +1,10 @@
 import React from 'react';
-import { Container, Card } from 'react-bootstrap';
+import { Container, Card, Row, Col } from 'react-bootstrap';
 import FormSection from './FormSection';
 import URLResults from './URLResults';
 import Navigation from './Navigation';
 import Footer from './Footer';
+import './MainContent.css'
 
 const MainContent = ({ 
   formData, 
@@ -17,16 +18,16 @@ const MainContent = ({
 }) => {
   return (
     <div className="content-column">
-      {/* Navigation inside the scrollable area */}
       <Navigation onToggleFilters={onToggleMobileFilters} />
       
-      {/* Scrollable content area */}
       <div className="main-content-scrollable">
-        <Container fluid className="p-0">
-          <Card className="rounded-0 border-0 shadow">
+
+
+        {/* Form Section */}
+        <Container fluid className="p-0 ">
+          <Card className="rounded-0 border-0 app-form background-secondary">
             <Card.Body className="p-4">
-              <h4 className="text-primary-dark mb-4">URL Configuration</h4>
-              
+                             
               <FormSection
                 formData={formData}
                 errors={errors}
@@ -37,15 +38,14 @@ const MainContent = ({
             </Card.Body>
           </Card>
 
-          {/* Generated URLs */}
+          {/* Generated URLs with smooth entrance */}
           {isFormValid && generatedUrls.length > 0 && (
-            <div className="mt-4">
+            <div className="mt-4 animate-fade-in">
               <URLResults urls={generatedUrls} onCopyAll={onCopyAll} />
             </div>
           )}
         </Container>
         
-        {/* Footer inside the scrollable area */}
         <Footer/>
       </div>
     </div>

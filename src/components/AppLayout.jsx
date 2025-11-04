@@ -1,6 +1,6 @@
-import React from 'react';
 import MainContent from './MainContent';
 import FilterPanel from './FilterPanel';
+import './AppLayout.css';
 
 const AppLayout = ({ 
   categories, 

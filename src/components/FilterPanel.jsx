@@ -1,4 +1,5 @@
 import React from 'react';
+import './FilterPanel.css';
 
 const FilterCheckbox = ({ checked, onChange, label, indent = 0 }) => (
   <div className={`form-check filter-checkbox-indent-${indent}`}>
