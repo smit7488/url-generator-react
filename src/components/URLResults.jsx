@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { Card, Alert, Container } from 'react-bootstrap';
+import QRCodeModal from './QRCodeModal';
 import './URLResults.css';
 
 const URLResults = ({ urls, onCopyAll }) => {
   const [allCopied, setAllCopied] = useState(false);
   const [copiedUrlIndex, setCopiedUrlIndex] = useState(null);
+  const [showQRModal, setShowQRModal] = useState(false);
+  const [selectedUrl, setSelectedUrl] = useState('');
 
   const handleCopyAll = async () => {
     if (urls.length === 0) return;
-    
-    const text = urls.map(group => 
+
+    const text = urls.map(group =>
       `${group.category}\n${group.urls.map(u => `${u.name}: ${u.url}`).join('\n')}`
     ).join('\n\n');
-    
+
     try {
       await navigator.clipboard.writeText(text);
       setAllCopied(true);
@@ -30,6 +33,11 @@ const URLResults = ({ urls, onCopyAll }) => {
     } catch (err) {
       console.error('Failed to copy:', err);
     }
+  };
+
+  const handleShowQR = (url) => {
+    setSelectedUrl(url);
+    setShowQRModal(true);
   };
 
   const totalUrls = urls ? urls.reduce((total, group) => total + group.urls.length, 0) : 0;
@@ -64,7 +72,7 @@ const URLResults = ({ urls, onCopyAll }) => {
                 {urls.length} categories • {totalUrls} total URLs
               </p>
             </div>
-            <button 
+            <button
               className={`btn ${allCopied ? 'btn-success' : 'btn-primary'} d-flex align-items-center copy-all-btn`}
               onClick={handleCopyAll}
             >
@@ -82,27 +90,48 @@ const URLResults = ({ urls, onCopyAll }) => {
                   </h5>
                   <span className="badge bg-primary">{group.urls.length} URLs</span>
                 </div>
+
                 {group.urls.map((urlObj, urlIndex) => {
                   const globalIndex = `${groupIndex}-${urlIndex}`;
                   const isCopied = copiedUrlIndex === globalIndex;
-                  
+
+                  // ✅ Only show QR button if this URL's name is EXACTLY "QR Code"
+                  const isQrUrl = urlObj.name?.trim().toLowerCase() === "qr code";
+
                   return (
                     <div key={urlIndex} className="mb-3">
                       <div className="d-flex justify-content-between align-items-center mb-2">
                         <h6 className="text-secondary small fw-semibold mb-0">{urlObj.name}</h6>
-                        <button
-                          onClick={() => handleCopyIndividual(urlObj.url, globalIndex)}
-                          className={`btn btn-sm ${isCopied ? 'btn-success' : 'btn-outline-primary'} copy-btn`}
-                          style={{ fontSize: '0.75rem' }}
-                        >
-                          <i className={`fas ${isCopied ? 'fa-check' : 'fa-copy'} me-1`}></i>
-                          {isCopied ? 'Copied!' : 'Copy'}
-                        </button>
+                        <div className="d-flex gap-2">
+                          <button
+                            onClick={() => handleCopyIndividual(urlObj.url, globalIndex)}
+                            className={`btn btn-sm ${isCopied ? 'btn-success' : 'btn-outline-primary'} copy-btn`}
+                            style={{ fontSize: '0.75rem' }}
+                          >
+                            <i className={`fas ${isCopied ? 'fa-check' : 'fa-copy'} me-1`}></i>
+                            {isCopied ? 'Copied!' : 'Copy'}
+                          </button>
+
+                          {/* Show QR button only if parent category is "QR Code" */}
+                          {group.category?.trim().toLowerCase() === "qr code" && (
+                            <button
+                              onClick={() => handleShowQR(urlObj.url)}
+                              className="btn btn-sm btn-outline-success"
+                              style={{ fontSize: "0.75rem" }}
+                              title="Generate QR Code"
+                            >
+                              <i className="fas fa-qrcode me-1"></i>
+                              QR
+                            </button>
+                          )}
+                        </div>
+
                       </div>
-                      <div 
+
+                      <div
                         className="p-3 bg-light rounded border url-display"
-                        style={{ 
-                          fontSize: '0.8rem', 
+                        style={{
+                          fontSize: '0.8rem',
                           wordBreak: 'break-all',
                           fontFamily: 'Monaco, Consolas, monospace',
                           cursor: 'pointer'
@@ -120,6 +149,13 @@ const URLResults = ({ urls, onCopyAll }) => {
           </div>
         </Card.Body>
       </Card>
+
+      {/* QR Code Modal */}
+      <QRCodeModal
+        show={showQRModal}
+        onHide={() => setShowQRModal(false)}
+        url={selectedUrl}
+      />
     </Container>
   );
 };

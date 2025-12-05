@@ -33,12 +33,8 @@ const App = () => {
   const [selectedGroups, setSelectedGroups] = useState({
     Generic: true,
     PaidDisplayAdsAdRoll: true,
-    PaidDisplayAdsAdAdvance: true,
-    PaidDisplayAdsRichRelevance: true,
     SocialMeta: true,
-    SocialTwitter: true,
-    SocialYouTube: true,
-    SocialLinkedIn: true
+    SocialTwitter: true
   });
 
   const hasRequiredUTMFields = formData.date && formData.project && formData.jobNumber && formData.division;

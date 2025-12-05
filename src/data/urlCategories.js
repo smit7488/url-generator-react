@@ -94,6 +94,7 @@ export const urlCategories = [
   {
     category: "Vanity URLs",
     key: "VanityURLs",
+    requiresVanityURL: true,
     subcategories: [
       { name: "External", key: "VanityURLs", urls: ["utm_source=External&utm_medium=VanityURL"], contentutm: ["VanityURL"] }
     ]

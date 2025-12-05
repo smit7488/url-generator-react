@@ -101,7 +101,11 @@ export const buildURL = (baseUrl, options) => {
 
   // Add division
   if (division) {
-    queryParams.push(`utm_term=${division}`, `cdivid=${division}`);
+    queryParams.push(`utm_term=${division}`);
+    // Only add cdivid if not GEP form
+    if (formType !== 'gep') {
+      queryParams.push(`cdivid=${division}`);
+    }
   }
 
   // Build final URL
