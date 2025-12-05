@@ -1,0 +1,46 @@
+{
+  "hash": "d3c147ce",
+  "configHash": "fe6f786a",
+  "lockfileHash": "cf4915b2",
+  "browserHash": "6abb801f",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "1f60db95",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "fc61f678",
+      "needsInterop": true
+    },
+    "react-bootstrap": {
+      "src": "../../node_modules/react-bootstrap/esm/index.js",
+      "file": "react-bootstrap.js",
+      "fileHash": "eab6591f",
+      "needsInterop": false
+    },
+    "react-icons/fa": {
+      "src": "../../node_modules/react-icons/fa/index.mjs",
+      "file": "react-icons_fa.js",
+      "fileHash": "a256e1a3",
+      "needsInterop": false
+    },
+    "qrcode.react": {
+      "src": "../../node_modules/qrcode.react/lib/esm/index.js",
+      "file": "qrcode__react.js",
+      "fileHash": "a4b3949b",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-QS7ZE27V": {
+      "file": "chunk-QS7ZE27V.js"
+    },
+    "chunk-OBOR3357": {
+      "file": "chunk-OBOR3357.js"
+    }
+  }
+}
