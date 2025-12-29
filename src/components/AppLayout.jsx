@@ -13,7 +13,8 @@ const AppLayout = ({
   onCopyAll, 
   isFormValid,
   showMobileFilters,
-  onToggleMobileFilters 
+  onToggleMobileFilters,
+  removeSpacesFromItems
 }) => {
   return (
     <div className="app-main-wrapper">
@@ -60,6 +61,7 @@ const AppLayout = ({
           onCopyAll={onCopyAll}
           isFormValid={isFormValid}
           onToggleMobileFilters={onToggleMobileFilters}
+          removeSpacesFromItems={removeSpacesFromItems}
         />
       </div>
 

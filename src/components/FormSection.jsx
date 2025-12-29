@@ -1,15 +1,202 @@
-import React, { useState } from 'react';
-import { Row, Col, Form, Alert, Card, Container } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Form, Alert, Card, Container, Dropdown } from 'react-bootstrap';
 import FormInput, { SelectInput } from './FormInput';
 import './FormSection.css';
+import { flags } from '../assets/flags';
 
-const FormSection = ({ formData, errors, handleInputChange, selectedGroups, formType }) => {
+const FormSection = ({ formData, errors, handleInputChange, selectedGroups, formType, removeSpacesFromItems }) => {
   const [isSwitching, setIsSwitching] = useState(false);
+  const [spaceRemovalMessage, setSpaceRemovalMessage] = useState('');
+
+  // Country configuration
+  const COUNTRY_CONFIG = {
+    oneweb: {
+      us: {
+        label: 'United States',
+        shortLabel: 'US',
+        flag: flags.us,
+        url: 'https://www.henryschein.com/us-en/shopping/products.aspx',
+        itemCodePattern: /^\d{7}$/,
+        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
+      },
+      uk: {
+        label: 'United Kingdom',
+        shortLabel: 'UK',
+        flag: flags.uk,
+        url: 'https://www.henryschein.co.uk/gb-en/shopping/products.aspx',
+        itemCodePattern: /^[A-Za-z0-9]{1,10}$/,
+        itemCodeHelp: 'Comma-separated item codes, can be alphanumeric (e.g., 0915,101025,1130364,H085413)'
+      },
+      kentExpress: {
+        label: 'Kent Express',
+        shortLabel: 'KE',
+        flag: flags.uk,
+        url: 'https://www.kentexpress.co.uk/gb-en/shopping/products.aspx',
+        itemCodePattern: /^[A-Za-z0-9]{1,10}$/,
+        itemCodeHelp: 'Comma-separated item codes, can be alphanumeric (e.g., KX228006,9792761,207388)'
+      },
+      ireland: {
+        label: 'Ireland',
+        shortLabel: 'IE',
+        flag: flags.ie,
+        url: 'https://www.henryschein.ie/ie-en/shopping/products.aspx',
+        itemCodePattern: /^\d{7}$/,
+        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
+      },
+      canadaEn: {
+        label: 'Canada (English)',
+        shortLabel: 'CA-EN',
+        flag: flags.ca,
+        url: 'https://www.henryschein.ca/ca-en/shopping/products.aspx',
+        itemCodePattern: /^\d{7}$/,
+        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
+      },
+      canadaFr: {
+        label: 'Canada (Français)',
+        shortLabel: 'CA-FR',
+        flag: flags.ca,
+        url: 'https://www.henryschein.ca/ca-fr/shopping/products.aspx',
+         itemCodePattern: /^\d{7}$/,
+        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
+      },
+        france: {
+        label: 'France',
+        shortLabel: 'FR-FR',
+        flag: flags.fr,
+        url: 'https://www.henryschein.fr/fr-fr/shopping/products.aspx',
+        itemCodePattern: /^\d{3}-\d{4}$/,
+        itemCodeHelp: 'Comma-separated codes in the format 878-0128, 123-4567, etc.'
+      }
+      
+    },
+    gep: {
+      us: {
+        label: 'United States',
+        shortLabel: 'US',
+        flag: flags.us,
+        url: 'https://www.henryschein.com/en-us/search/',
+        itemCodePattern: /^\d{7}$/,
+        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
+      },
+      uk: {
+        label: 'United Kingdom',
+        shortLabel: 'UK',
+        flag: flags.uk,
+        url: 'https://www.henryschein.co.uk/search/',
+        itemCodePattern: /^[A-Za-z0-9]{1,10}$/,
+        itemCodeHelp: 'Comma-separated item codes, can be alphanumeric (e.g., 0915,101025,1130364,H085413)'
+      },
+        kentExpress: {
+        label: 'Kent Express',
+        shortLabel: 'KE',
+        flag: flags.uk,
+        url: 'https://www.kentexpress.co.uk/search/',
+        itemCodePattern: /^[A-Za-z0-9]{1,10}$/,
+        itemCodeHelp: 'Comma-separated item codes, can be alphanumeric (e.g., KX228006,9792761,207388)'
+      },
+      ireland: {
+        label: 'Ireland',
+        shortLabel: 'IE',
+        flag: flags.ie,
+        url: 'https://www.henryschein.ie/search/',
+        itemCodePattern: /^\d{7}$/,
+        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
+      },
+      canadaEn: {
+        label: 'Canada (English)',
+        shortLabel: 'CA-EN',
+        flag: flags.ca,
+        url: 'https://www.henryschein.ca/en-ca/search/',
+        itemCodePattern: /^\d{7}$/,
+        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
+      },
+      canadaFr: {
+        label: 'Canada (Français)',
+        shortLabel: 'CA-FR',
+        flag: flags.ca,
+        url: 'https://www.henryschein.ca/fr-ca/search/',
+        itemCodePattern: /^\d{7}$/,
+        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
+      },
+      france: {
+        label: 'France',
+        shortLabel: 'FR-FR',
+        flag: flags.fr,
+        url: 'https://www.henryschein.fr/search/',
+        itemCodePattern: /^\d{3}-\d{4}$/,
+        itemCodeHelp: 'Comma-separated codes in the format 878-0128, 123-4567, etc.'
+      }
+    }
+  };
 
   const handleFormTypeChange = (e) => {
     setIsSwitching(true);
     handleInputChange(e);
     setTimeout(() => setIsSwitching(false), 300);
+  };
+
+  // Get current country or default to 'us'
+  const currentCountry = formData.country || 'us';
+  const countryConfig = COUNTRY_CONFIG[formType][currentCountry];
+
+  // Update URL when country or formType changes
+  useEffect(() => {
+    const newUrl = COUNTRY_CONFIG[formType][currentCountry]?.url;
+    if (newUrl && formData.pageUrl !== newUrl) {
+      handleInputChange({
+        target: {
+          name: 'pageUrl',
+          value: newUrl
+        }
+      });
+    }
+  }, [currentCountry, formType]);
+
+  // Handle country selection
+  const handleCountrySelect = (countryKey) => {
+    handleInputChange({
+      target: {
+        name: 'country',
+        value: countryKey
+      }
+    });
+    
+    const newUrl = COUNTRY_CONFIG[formType][countryKey]?.url;
+    if (newUrl) {
+      handleInputChange({
+        target: {
+          name: 'pageUrl',
+          value: newUrl
+        }
+      });
+    }
+  };
+
+  // Handle remove spaces with notification
+  const handleRemoveSpaces = () => {
+    const originalValue = formData.items || '';
+    
+    if (!originalValue) {
+      setSpaceRemovalMessage('No item codes to clean');
+      setTimeout(() => setSpaceRemovalMessage(''), 2000);
+      return;
+    }
+
+    // Count spaces before removal
+    const spaceCount = (originalValue.match(/\s/g) || []).length;
+    
+    if (spaceCount === 0) {
+      setSpaceRemovalMessage('No spaces found');
+      setTimeout(() => setSpaceRemovalMessage(''), 2000);
+      return;
+    }
+
+    // Call the removal function which updates the actual form input
+    const cleanedValue = removeSpacesFromItems();
+    
+    // Show success message
+    setSpaceRemovalMessage(`Removed ${spaceCount} space${spaceCount === 1 ? '' : 's'}`);
+    setTimeout(() => setSpaceRemovalMessage(''), 3000);
   };
 
   // Check if any conditional inputs need to be shown
@@ -84,38 +271,137 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
 
           {/* ALL FORM INPUTS IN ONE ROW */}
           <Row className="g-3 mb-4">
-            {/* Page URL - Full width on mobile, half on desktop */}
-            <Col xl={6} md={12}>
-              <FormInput
-                label={formType === 'oneweb' ? "OneWeb Page URL" : "GEP Page URL"}
-                name="pageUrl"
-                value={
-                  formData.pageUrl ||
-                  (formType === 'oneweb'
-                    ? "https://www.henryschein.com/us-en/shopping/products.aspx"
-                    : "https://www.henryschein.com/en-us/search/")
-                }
-                onChange={handleInputChange}
-                error={errors.pageUrl}
-                helpText={
-                  formType === 'oneweb'
-                    ? "Paste the full URL ending in .aspx, for example: https://www.henryschein.com/us-en/shopping/products.aspx"
-                    : "Paste the GEP landing page URL, e.g.: https://www.henryschein.com/en-us/search/"
-                }
-                required
-              />
+            {/* Page URL with Country Selector */}
+            <Col xl={7} md={12}>
+              <Form.Group>
+                <Form.Label className="form-label fw-bold text-primary-dark" style={{ minHeight: '28px' }}>
+                  {formType === 'oneweb' ? "OneWeb Page URL" : "GEP Page URL"}
+                  <span className="text-danger"> *</span>
+                </Form.Label>
+                
+                <div className="d-flex gap-2 flex-wrap">
+                  {/* Country Dropdown */}
+                  <Dropdown onSelect={handleCountrySelect}>
+                    <Dropdown.Toggle 
+                      variant="outline-secondary" 
+                      id="country-dropdown"
+                      className="d-flex align-items-center px-3"
+                      style={{ minWidth: '180px' }}
+                    >
+                      <img 
+                        src={countryConfig.flag}
+                        alt={`${countryConfig.label} flag`}
+                        style={{ 
+                          width: '28px', 
+                          height: '14px', 
+                          marginRight: '8px',
+                          objectFit: 'cover'
+                        }}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                      <span className="flex-grow-1 text-start">
+                        {countryConfig.label}
+                      </span>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      {Object.entries(COUNTRY_CONFIG[formType]).map(([key, config]) => (
+                        <Dropdown.Item 
+                          key={key}
+                          eventKey={key}
+                          active={currentCountry === key}
+                        >
+                          <div className="d-flex align-items-center">
+                            <img 
+                              src={config.flag}
+                              alt={`${config.label} flag`}
+                              style={{ 
+                                width: '28px', 
+                                height: '14px', 
+                                marginRight: '8px',
+                                objectFit: 'cover'
+                              }}
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                              }}
+                            />
+                            <span>{config.label}</span>
+                          </div>
+                        </Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                  
+                  {/* URL Input */}
+                  <div className="flex-grow-1">
+                    <Form.Control
+                      type="text"
+                      name="pageUrl"
+                      value={formData.pageUrl || countryConfig.url}
+                      onChange={handleInputChange}
+                      isInvalid={!!errors.pageUrl}
+                      required
+                    />
+                    {errors.pageUrl && (
+                      <Form.Control.Feedback type="invalid">
+                        {errors.pageUrl}
+                      </Form.Control.Feedback>
+                    )}
+                  </div>
+                </div>
+                
+                <Form.Text className="text-muted">
+                  {formType === 'oneweb'
+                    ? "Paste the full URL ending in .aspx"
+                    : `Default URL for ${countryConfig.label}. Modify if needed.`}
+                </Form.Text>
+              </Form.Group>
             </Col>
 
-            {/* Item Codes - Full width on mobile, half on desktop */}
-            <Col xl={6} md={12}>
-              <FormInput
-                label="Item Codes"
-                name="items"
-                value={formData.items}
-                onChange={handleInputChange}
-                error={errors.items}
-                helpText="Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)"
-              />
+            {/* Item Codes with Remove Spaces Button */}
+            <Col xl={5} md={12}>
+              <div className="mb-3">
+                <div className="d-flex align-items-center justify-content-between mb-2">
+                  <label className="form-label fw-bold text-primary-dark mb-0">
+                    Item Codes
+                  </label>
+                  <div className="d-flex align-items-center gap-2">
+                    {spaceRemovalMessage && (
+                      <span 
+                        className="text-success small fw-semibold animate-fade-in"
+                        style={{ fontSize: '0.75rem' }}
+                      >
+                        <i className="fas fa-check-circle me-1"></i>
+                        {spaceRemovalMessage}
+                      </span>
+                    )}
+                    <button
+                      type="button"
+                      onClick={handleRemoveSpaces}
+                      className="btn btn-sm btn-outline-secondary"
+                      style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+                    >
+                      <i className="fas fa-broom me-1"></i>
+                      Remove Spaces
+                    </button>
+                  </div>
+                </div>
+                <input
+                  type="text"
+                  className={`form-control ${errors.items ? 'is-invalid' : ''}`}
+                  name="items"
+                  value={formData.items}
+                  onChange={handleInputChange}
+                />
+                {errors.items && <div className="invalid-feedback">{errors.items}</div>}
+                {countryConfig.itemCodeHelp && (
+                  <small className="form-text text-muted d-block mt-1">
+                    {countryConfig.itemCodeHelp}
+                  </small>
+                )}
+              </div>
             </Col>
 
             {/* Promo Code for OneWeb */}
@@ -135,42 +421,42 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
             {/* Required Fields - Three Columns */}
             <Col xl={4} lg={6} md={6}>
               <FormInput
-                label="*Date"
+                label="Date"
                 name="date"
                 type="date"
                 value={formData.date}
                 onChange={handleInputChange}
                 helpText="Select the live date"
-                required={!selectedGroups.Generic}
+                required
               />
             </Col>
             
             <Col xl={4} lg={6} md={6}>
               <FormInput
-                label="*Project Name"
+                label="Project Name"
                 name="project"
                 value={formData.project}
                 onChange={handleInputChange}
                 helpText="Ex: CADCAM"
-                required={!selectedGroups.Generic}
+                required
               />
             </Col>
             
             <Col xl={4} lg={6} md={6}>
               <FormInput
-                label="*Job Number"
+                label="Job Number"
                 name="jobNumber"
                 value={formData.jobNumber}
                 onChange={handleInputChange}
                 error={errors.jobNumber}
                 helpText="Ex: 24DS2828"
-                required={!selectedGroups.Generic}
+                required
               />
             </Col>
             
             <Col xl={4} lg={6} md={6}>
               <SelectInput
-                label="*Division"
+                label="Division"
                 name="division"
                 value={formData.division}
                 onChange={handleInputChange}
@@ -184,7 +470,7 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
                   { value: '340b', label: '340b' },
                   { value: 'corporate', label: 'Corporate' }
                 ]}
-                required={!selectedGroups.Generic}
+                required
               />
             </Col>
             
@@ -192,7 +478,7 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
             {formType === 'oneweb' && (
               <Col xl={4} lg={6} md={6} className="animate-slide-down">
                 <SelectInput
-                  label="*Show Pricing?"
+                  label="Show Pricing?"
                   name="pricing"
                   value={formData.pricing}
                   onChange={handleInputChange}
@@ -200,7 +486,7 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
                     { value: 'dp=true', label: 'Yes' },
                     { value: 'dp=false', label: 'No' }
                   ]}
-                  required={!selectedGroups.Generic}
+                  required
                 />
               </Col>
             )}

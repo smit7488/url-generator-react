@@ -14,7 +14,8 @@ const MainContent = ({
   generatedUrls, 
   onCopyAll, 
   isFormValid,
-  onToggleMobileFilters 
+  onToggleMobileFilters,
+  removeSpacesFromItems
 }) => {
   return (
     <div className="content-column">
@@ -34,6 +35,7 @@ const MainContent = ({
                 handleInputChange={handleInputChange}
                 selectedGroups={selectedGroups}
                 formType={formData.formType}
+                removeSpacesFromItems={removeSpacesFromItems}
               />
             </Card.Body>
           </Card>

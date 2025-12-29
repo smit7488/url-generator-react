@@ -3,7 +3,8 @@ import React from 'react';
 const FormInput = ({ label, name, value, onChange, error, helpText, type = "text", required = false, className = "mb-3" }) => (
   <div className={className}>
     <label className="form-label fw-bold text-primary-dark">
-      {required && '*'}{label}:
+      {label}
+      {required && <span className="text-danger"> *</span>}
     </label>
     <input
       type={type}
@@ -20,7 +21,8 @@ const FormInput = ({ label, name, value, onChange, error, helpText, type = "text
 export const SelectInput = ({ label, name, value, onChange, options, required = false, className = "" }) => (
   <div className={className}>
     <label className="form-label fw-bold text-primary-dark">
-      {required && '*'}{label}
+      {label}
+      {required && <span className="text-danger"> *</span>}
     </label>
     <select className="form-select" name={name} value={value} onChange={onChange}>
       {options.map(opt => (

@@ -28,7 +28,7 @@ const App = () => {
     formType: 'gep'
   };
 
-  const { formData, errors, handleInputChange, setFormData } = useFormValidation(initialFormData);
+  const { formData, errors, handleInputChange, setFormData, removeSpacesFromItems } = useFormValidation(initialFormData);
 
   const [selectedGroups, setSelectedGroups] = useState({
     Generic: true,
@@ -115,6 +115,7 @@ const App = () => {
         onToggleMobileFilters={toggleMobileFilters}
         showTaggedURLs={showTaggedURLs}
         hasRequiredUTMFields={hasRequiredUTMFields}
+        removeSpacesFromItems={removeSpacesFromItems}
       />
     </div>
   );
