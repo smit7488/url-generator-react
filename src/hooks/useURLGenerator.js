@@ -22,7 +22,7 @@ export const useURLGenerator = (formData, selectedGroups) => {
     const pricing = formData.pricing;
     const vanity = formData.vanity.split('/').pop() || '';
     const dateProjectJob = `utm_campaign=${date}-${project}-${jobNumber}`;
-    const isHenrySchein = baseUrl.includes('henryschein');
+    const isHenrySchein = baseUrl.includes('henryschein') || baseUrl.includes('kentexpress');
     const formType = formData.formType;
 
     // Check if we have minimum required fields for tagged URLs
