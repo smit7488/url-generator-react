@@ -274,7 +274,7 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
             {/* Page URL with Country Selector */}
             <Col xl={7} md={12}>
               <Form.Group>
-                <Form.Label className="form-label fw-bold text-primary-dark" style={{ minHeight: '28px' }}>
+                <Form.Label className="fw-bold text-primary-dark">
                   {formType === 'oneweb' ? "OneWeb Page URL" : "GEP Page URL"}
                   <span className="text-danger"> *</span>
                 </Form.Label>
@@ -366,6 +366,11 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
                 <div className="d-flex align-items-center justify-content-between mb-2">
                   <label className="form-label fw-bold text-primary-dark mb-0">
                     Item Codes
+                    {formData.items && formData.items.trim() && (
+                      <span className="badge bg-primary ms-2" style={{ fontSize: '0.7rem', fontWeight: 'normal' }}>
+                        {formData.items.split(',').filter(code => code.trim()).length} {formData.items.split(',').filter(code => code.trim()).length === 1 ? 'code' : 'codes'}
+                      </span>
+                    )}
                   </label>
                   <div className="d-flex align-items-center gap-2">
                     {spaceRemovalMessage && (
@@ -427,7 +432,7 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
                 value={formData.date}
                 onChange={handleInputChange}
                 helpText="Select the live date"
-                required
+                required={!selectedGroups.Generic}
               />
             </Col>
             
@@ -438,7 +443,7 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
                 value={formData.project}
                 onChange={handleInputChange}
                 helpText="Ex: CADCAM"
-                required
+                required={!selectedGroups.Generic}
               />
             </Col>
             
@@ -449,8 +454,8 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
                 value={formData.jobNumber}
                 onChange={handleInputChange}
                 error={errors.jobNumber}
-                helpText="Ex: 24DS2828"
-                required
+                helpText="Ex: 26DS2828"
+                required={!selectedGroups.Generic}
               />
             </Col>
             
@@ -470,7 +475,7 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
                   { value: '340b', label: '340b' },
                   { value: 'corporate', label: 'Corporate' }
                 ]}
-                required
+                required={!selectedGroups.Generic}
               />
             </Col>
             
@@ -486,7 +491,7 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
                     { value: 'dp=true', label: 'Yes' },
                     { value: 'dp=false', label: 'No' }
                   ]}
-                  required
+                  required={!selectedGroups.Generic}
                 />
               </Col>
             )}
