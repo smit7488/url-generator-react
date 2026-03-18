@@ -66,6 +66,14 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
         url: 'https://www.henryschein.fr/fr-fr/shopping/products.aspx',
         itemCodePattern: /^\d{3}-\d{4}$/,
         itemCodeHelp: 'Comma-separated codes in the format 878-0128, 123-4567, etc.'
+      },
+       netherlands: {
+        label: 'Netherlands',
+        shortLabel: 'NL',
+        flag: flags.nl,
+        url: 'https://www.henryschein.nl/nl-nl/shopping/products.aspx',
+        itemCodePattern: /^\d{7}$/,
+        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
       }
       
     },
@@ -125,7 +133,15 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
         url: 'https://www.henryschein.fr/search/',
         itemCodePattern: /^\d{3}-\d{4}$/,
         itemCodeHelp: 'Comma-separated codes in the format 878-0128, 123-4567, etc.'
-      }
+      },
+        netherlands: {
+        label: 'Netherlands (Staging)',
+        shortLabel: 'NL',
+        flag: flags.nl,
+        url: 'https://www1.henryschein.nl/search/',
+        itemCodePattern: /^\d{7}$/,
+        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
+      },
     }
   };
 

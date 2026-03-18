@@ -6,6 +6,7 @@ import ieFlag from './ie-flag.svg';
 import beFlag from './be-flag.svg';
 import itFlag from './it-flag.svg'; 
 import atFlag from './at-flag.svg';
+import nlFlag from './nl-flag.svg';
 
 export const flags = {
   us: usFlag,
@@ -15,5 +16,6 @@ export const flags = {
   ie: ieFlag, 
   be: beFlag, 
   it: itFlag, 
-  at: atFlag   
+  at: atFlag,
+  nl: nlFlag 
 };
