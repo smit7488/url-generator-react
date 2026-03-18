@@ -379,8 +379,9 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
             {/* Item Codes with Remove Spaces Button */}
             <Col xl={5} md={12}>
               <div className="mb-3">
-                <div className="d-flex align-items-center justify-content-between mb-2">
-                  <label className="form-label fw-bold text-primary-dark mb-0">
+                <div className="d-flex align-items-center justify-content-between
+                ">
+                  <label className="fw-bold text-primary-dark form-label">
                     Item Codes
                     {formData.items && formData.items.trim() && (
                       <span className="badge bg-primary ms-2" style={{ fontSize: '0.7rem', fontWeight: 'normal' }}>
@@ -402,7 +403,7 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
                       type="button"
                       onClick={handleRemoveSpaces}
                       className="btn btn-sm btn-outline-secondary"
-                      style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+                      style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', marginTop: '-0.5rem' }}
                     >
                       <i className="fas fa-broom me-1"></i>
                       Remove Spaces
