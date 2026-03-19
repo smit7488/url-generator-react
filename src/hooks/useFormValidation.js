@@ -5,24 +5,27 @@ export const useFormValidation = (initialData) => {
   const [formData, setFormData] = useState(initialData);
   const [errors, setErrors] = useState({});
 
-  const handleInputChange = useCallback((e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Get current country for item code validation
-    // If we're changing the country, use the new value; otherwise use existing
-    const currentCountry = name === 'country' ? value : (formData.country || 'us');
-    
-    // Validate on change with country parameter for items
-    let error;
-    if (name === 'items') {
-      error = validators[name]?.(value, currentCountry);
-    } else if (validators[name]) {
-      error = validators[name]?.(value);
-    }
-    
+const handleInputChange = useCallback((e) => {
+  const { name, value } = e.target;
+  setFormData(prev => ({ ...prev, [name]: value }));
+
+  const currentCountry = name === 'country' ? value : (formData.country || 'us');
+
+  let error;
+  if (name === 'items') {
+    error = validators['items']?.(value, currentCountry);
+  } else if (validators[name]) {
+    error = validators[name]?.(value);
+  }
+
+  // When country changes, re-validate existing items value against the new country
+  if (name === 'country' && formData.items) {
+    const itemsError = validators['items']?.(formData.items, value);
+    setErrors(prev => ({ ...prev, [name]: error, items: itemsError }));
+  } else {
     setErrors(prev => ({ ...prev, [name]: error }));
-  }, [formData.country]);
+  }
+}, [formData.country, formData.items]);
 
   const validateForm = useCallback(() => {
     const currentCountry = formData.country || 'us';

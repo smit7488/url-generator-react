@@ -4,7 +4,7 @@ import FormInput, { SelectInput } from './FormInput';
 import './FormSection.css';
 import { flags } from '../assets/flags';
 
-const FormSection = ({ formData, errors, handleInputChange, selectedGroups, formType, removeSpacesFromItems }) => {
+const FormSection = ({ formData, errors, handleInputChange, handleBlur, selectedGroups, formType, removeSpacesFromItems }) => {
   const [isSwitching, setIsSwitching] = useState(false);
   const [spaceRemovalMessage, setSpaceRemovalMessage] = useState('');
 
@@ -48,16 +48,16 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
         shortLabel: 'CA-EN',
         flag: flags.ca,
         url: 'https://www.henryschein.ca/ca-en/shopping/products.aspx',
-        itemCodePattern: /^\d{7}$/,
-        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
+        itemCodePattern: /^\d{6,7}$/,
+        itemCodeHelp: 'Comma-separated 6 or 7-digit codes (e.g., 5702440,1126402,1126403)'
       },
       canadaFr: {
         label: 'Canada (Français)',
         shortLabel: 'CA-FR',
         flag: flags.ca,
         url: 'https://www.henryschein.ca/ca-fr/shopping/products.aspx',
-         itemCodePattern: /^\d{7}$/,
-        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
+         itemCodePattern: /^\d{6,7}$/,
+        itemCodeHelp: 'Comma-separated 6 or 7-digit codes (e.g., 5702440,1126402,1126403)'
       },
         france: {
         label: 'France',
@@ -72,8 +72,8 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
         shortLabel: 'NL',
         flag: flags.nl,
         url: 'https://www.henryschein.nl/nl-nl/shopping/products.aspx',
-        itemCodePattern: /^\d{7}$/,
-        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
+        itemCodePattern: /^\d{6}$/,
+        itemCodeHelp: 'Comma-separated 6-digit codes (e.g., 570244,112640,112640)'
       }
       
     },
@@ -115,16 +115,16 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
         shortLabel: 'CA-EN',
         flag: flags.ca,
         url: 'https://www.henryschein.ca/en-ca/search/',
-        itemCodePattern: /^\d{7}$/,
-        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
+        itemCodePattern: /^\d{6,7}$/,
+        itemCodeHelp: 'Comma-separated 6 or 7-digit codes (e.g., 5702440,1126402,1126403)'
       },
       canadaFr: {
         label: 'Canada (Français)',
         shortLabel: 'CA-FR',
         flag: flags.ca,
         url: 'https://www.henryschein.ca/fr-ca/search/',
-        itemCodePattern: /^\d{7}$/,
-        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
+        itemCodePattern: /^\d{6,7}$/,
+        itemCodeHelp: 'Comma-separated 6 or 7-digit codes (e.g., 5702440,1126402,1126403)'
       },
       france: {
         label: 'France',
@@ -139,8 +139,8 @@ const FormSection = ({ formData, errors, handleInputChange, selectedGroups, form
         shortLabel: 'NL',
         flag: flags.nl,
         url: 'https://www1.henryschein.nl/search/',
-        itemCodePattern: /^\d{7}$/,
-        itemCodeHelp: 'Comma-separated 7-digit codes (e.g., 5702440,1126402,1126403)'
+        itemCodePattern: /^\d{6}$/,
+        itemCodeHelp: 'Comma-separated 6-digit codes (e.g., 570244,112640,112640)'
       },
     }
   };

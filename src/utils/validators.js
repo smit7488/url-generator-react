@@ -2,38 +2,43 @@
 export const ITEM_CODE_RULES = {
   us: {
     pattern: /^(\d{7})(,\s*\d{7})*$/,
-    message: "Item codes must be 7-digit numbers separated by commas (e.g., 5702440,1126402)",
+    message: "Warning: Item codes are typically 7-digit numbers separated by commas (e.g., 5702440,1126402)",
     validateSingle: (code) => /^\d{7}$/.test(code)
   },
   uk: {
     pattern: /^([A-Za-z0-9]{1,10})(,\s*[A-Za-z0-9]{1,10})*$/,
-    message: "Item codes can be alphanumeric (e.g., 0915,101025,1130364,H085413)",
+    message: "Warning: Item codes can be alphanumeric (e.g., 0915,101025,1130364,H085413)",
     validateSingle: (code) => /^[A-Za-z0-9]{1,10}$/.test(code)
   },
   kentExpress: {
     pattern: /^([A-Za-z0-9]{1,10})(,\s*[A-Za-z0-9]{1,10})*$/,
-    message: "Item codes can be alphanumeric (e.g., KX228006,9792761,207388)",
+    message: "Warning: Item codes can be alphanumeric (e.g., KX228006,9792761,207388)",
     validateSingle: (code) => /^[A-Za-z0-9]{1,10}$/.test(code)
   },
   ireland: {
     pattern: /^(\d{7})(,\s*\d{7})*$/,
-    message: "Item codes must be 7-digit numbers separated by commas (e.g., 5702440,1126402)",
+    message: "Warning: Item codes must be 7-digit numbers separated by commas (e.g., 5702440,1126402)",
     validateSingle: (code) => /^\d{7}$/.test(code)
   },
   canadaEn: {
-    pattern: /^(\d{7})(,\s*\d{7})*$/,
-    message: "Item codes must be 7-digit numbers separated by commas (e.g., 5702440,1126402)",
-    validateSingle: (code) => /^\d{7}$/.test(code)
+    pattern: /^(\d{6,7})(,\s*\d{6,7})*$/,
+    message: "Warning: Item codes are typically 6 or 7 digit numbers separated by commas (e.g., 5702440,1126402)",
+    validateSingle: (code) => /^\d{6,7}$/.test(code)
   },
   canadaFr: {
-    pattern: /^(\d{7})(,\s*\d{7})*$/,
-    message: "Item codes must be 7-digit numbers separated by commas (e.g., 5702440,1126402)",
-    validateSingle: (code) => /^\d{7}$/.test(code)
+    pattern: /^(\d{6,7})(,\s*\d{6,7})*$/,
+    message: "Warning: Item codes are typically 6 or 7 digit numbers separated by commas (e.g., 5702440,1126402)",
+    validateSingle: (code) => /^\d{6,7}$/.test(code)
   },
   france: {
     pattern: /^(\d{3}-\d{4})(,\s*\d{3}-\d{4})*$/,
-    message: "Item codes must be in the format 878-0128, 123-4567, etc.",
+    message: "Warning: Item codes must be in the format 878-0128, 123-4567, etc.",
     validateSingle: (code) => /^\d{3}-\d{4}$/.test(code)
+  },
+  netherlands: {
+    pattern: /^(\d{6})(,\s*\d{6})*$/,
+    message: "Warning: Item codes are typically 6-digit numbers separated by commas (e.g., 570244,112640)",
+    validateSingle: (code) => /^\d{6}$/.test(code)
   }
 };
 
