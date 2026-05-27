@@ -12,12 +12,12 @@ export const useURLGenerator = (formData, selectedGroups) => {
     }
 
     const urls = [];
-    const baseUrl = formData.pageUrl.trim();
+    const baseUrl = formData.pageUrl.trim().toLowerCase();
     const items = formData.items.trim().replace(/\s/g, '');
-    const promo = formData.promo.trim().toUpperCase();
+    const promo = formData.promo.trim().toLowerCase();
     const date = formData.date.replace(/-/g, '');
-    const project = formData.project.trim().replace(/\s/g, '');
-    const jobNumber = formData.jobNumber.trim().replace(/\s/g, '').toUpperCase();
+    const project = formData.project.trim().replace(/\s/g, '').toLowerCase();
+    const jobNumber = formData.jobNumber.trim().replace(/\s/g, '').toLowerCase();
     const division = formData.division;
     const pricing = formData.pricing;
     const vanity = formData.vanity.split('/').pop() || '';
