@@ -6,6 +6,14 @@ export const urlCategories = [
       { name: "Generic Url", key: "Generic", urls: [""], contentutm: [""] }
     ]
   },
+
+    {
+    category: "Dynamic Yield Web Ads",
+    key: "DynamicYieldWebAds",
+    subcategories: [
+      { name: "DY Web Ad (GEP)", key: "DynamicYieldWebAds", urls: ["fromDy=true"], contentutm: [""] }
+    ]
+  },
   {
     category: "Paid Search Ads",
     key: "PaidSearchAds",

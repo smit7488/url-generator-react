@@ -41,7 +41,7 @@ export const useURLGenerator = (formData, selectedGroups) => {
               urlPart: sub.urls[0],
               dateProjectJob: '',
               contentUtm: '',
-              division: '',
+              division,
               formType,
               isGeneric: true,
               isHenrySchein
@@ -52,9 +52,39 @@ export const useURLGenerator = (formData, selectedGroups) => {
         if (categoryUrls.length > 0) {
           urls.push({ category: group.category, urls: categoryUrls });
         }
-        return; // Exit early for Generic, don't apply UTM checks
+        return;
       }
 
+      // Dynamic Yield: GEP only, behaves like generic but appends fromDy=true
+      if (group.key === "DynamicYieldWebAds") {
+        if (formType !== 'gep') return;
+        const categoryUrls = [];
+        group.subcategories.forEach(sub => {
+          if (selectedGroups[sub.key]) {
+            const genericUrl = buildURL(baseUrl, {
+              items,
+              promo,
+              pricing,
+              urlPart: '',
+              dateProjectJob: '',
+              contentUtm: '',
+              division: '',
+              formType,
+              isGeneric: true,
+              isHenrySchein
+            });
+            // Append fromDy=true to whatever the generic URL produced
+            const url = genericUrl.includes('?') 
+              ? `${genericUrl}&fromDy=true` 
+              : `${genericUrl}?fromDy=true`;
+            categoryUrls.push({ subcategory: sub.name, name: sub.name, url });
+          }
+        });
+        if (categoryUrls.length > 0) {
+          urls.push({ category: group.category, urls: categoryUrls });
+        }
+        return;
+      }
       // For all other groups, check requirements
       if (group.requiresMarketo && !formData.marketoFolderName) return;
       if (group.requiresQRContent && !formData.qrCodeContent) return;

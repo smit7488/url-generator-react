@@ -47,12 +47,15 @@ export const buildURL = (baseUrl, options) => {
       }
 
       // Add promo and pricing for OneWeb
-      if (formType === 'oneweb') {
+    if (formType === 'oneweb') {
         if (promo) {
           queryParams.push(`promocode=${promo}`);
         }
         if (pricing && pricing !== 'dp=false') {
           queryParams.push(pricing);
+        }
+        if (division) {
+          queryParams.push(`cdivid=${division}`);
         }
       }
     }
