@@ -7,7 +7,7 @@ export const urlCategories = [
     ]
   },
 
-    {
+  {
     category: "Dynamic Yield Web Ads",
     key: "DynamicYieldWebAds",
     subcategories: [
@@ -76,10 +76,10 @@ export const urlCategories = [
     category: "Social",
     key: "Social",
     subcategories: [
-      { name: "Meta", key: "SocialMeta", urls: ["utm_source=meta&utm_medium=social"], contentutm: ["socialbannermeta"] },
-      { name: "Twitter", key: "SocialTwitter", urls: ["utm_source=twitter&utm_medium=social"], contentutm: ["socialbannertwitter"] },
-      { name: "YouTube", key: "SocialYouTube", urls: ["utm_source=youtube&utm_medium=social"], contentutm: ["socialbanneryoutube"] },
-      { name: "LinkedIn", key: "SocialLinkedIn", urls: ["utm_source=linkedin&utm_medium=social"], contentutm: ["socialbannerlinkedin"] }
+      { name: "Meta", key: "SocialMeta", urls: ["utm_source=meta&utm_medium=cpc"], contentutm: ["socialbannermeta"] },
+      { name: "Twitter", key: "SocialTwitter", urls: ["utm_source=twitter&utm_medium=cpc"], contentutm: ["socialbannertwitter"] },
+      { name: "YouTube", key: "SocialYouTube", urls: ["utm_source=youtube&utm_medium=cpc"], contentutm: ["socialbanneryoutube"] },
+      { name: "LinkedIn", key: "SocialLinkedIn", urls: ["utm_source=linkedin&utm_medium=cpc"], contentutm: ["socialbannerlinkedin"] }
     ]
   },
   {
