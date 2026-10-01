@@ -60,6 +60,7 @@ export const urlCategories = [
     key: "PaidDisplayAds",
     subcategories: [
       { name: "AdRoll", key: "PaidDisplayAdsAdRoll", urls: ["utm_source=adroll&utm_medium=display"], contentutm: ["adrollbanner"] },
+      { name: "StackAdapt", key: "PaidDisplayAdsStackAdapt", urls: ["utm_source=stackadapt&utm_medium=display"], contentutm: ["stackadaptbanner"] },
       { name: "AdAdvance", key: "PaidDisplayAdsAdAdvance", urls: ["utm_source=adadvance&utm_medium=display"], contentutm: ["adadvancebanner"] },
       { name: "RichRelevance", key: "PaidDisplayAdsRichRelevance", urls: ["utm_source=richrelevance&utm_medium=display"], contentutm: ["richrelevancebanner"] }
     ]
