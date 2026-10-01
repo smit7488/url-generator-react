@@ -47,61 +47,60 @@ export const validators = {
     const regex = /^(https?:\/\/)?[^\s/$.?#].[^\s]*$/i;
     return !value || regex.test(value) ? null : "Please enter a valid URL";
   },
-  
+
   // Updated items validator that accepts country parameter
   items: (value, country = 'us') => {
     if (!value) return null;
-    
+
     const rules = ITEM_CODE_RULES[country] || ITEM_CODE_RULES.us;
-    
+
     // Remove all whitespace for validation
     const cleanValue = value.replace(/\s/g, '');
-    
+
     // Check overall pattern
     if (!rules.pattern.test(cleanValue)) {
       return rules.message;
     }
-    
+
     // Additional validation: check each individual code
     const codes = cleanValue.split(',');
     const invalidCodes = codes.filter(code => !rules.validateSingle(code));
-    
+
     if (invalidCodes.length > 0) {
       return `Invalid item code(s): ${invalidCodes.join(', ')}. ${rules.message}`;
     }
-    
+
     return null;
   },
-  
+
   promo: (value) => {
     return !value || value.length <= 3 ? null : "Promo codes are typically 3 characters";
   },
-  
+
   jobNumber: (value) => {
-    const regex = /^\d{2}[A-Za-z]{2}\d{4}$/;
-    return !value || regex.test(value) ? null : "Format: ##LL#### (e.g., 24DS2828)";
+    return !value || value.trim().length >= 6 ? null : "Lytho job number must be at least 6 characters - ex: 26DSMultichannel5773, 26DS2931, 26DSLandingPage4234";
   }
 };
 
 // Updated validateAllFields to accept country for item code validation
 export const validateAllFields = (formData, country = 'us') => {
   const errors = {};
-  
+
   Object.keys(validators).forEach(field => {
     let error;
-    
+
     // Pass country parameter for items validation
     if (field === 'items') {
       error = validators[field](formData[field], country);
     } else {
       error = validators[field](formData[field]);
     }
-    
+
     if (error) {
       errors[field] = error;
     }
   });
-  
+
   return errors;
 };
 
