@@ -56,10 +56,10 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
         shortLabel: 'CA-FR',
         flag: flags.ca,
         url: 'https://www.henryschein.ca/ca-fr/shopping/products.aspx',
-         itemCodePattern: /^\d{6,7}$/,
+        itemCodePattern: /^\d{6,7}$/,
         itemCodeHelp: 'Comma-separated 6 or 7-digit codes (e.g., 5702440,1126402,1126403)'
       },
-        france: {
+      france: {
         label: 'France',
         shortLabel: 'FR-FR',
         flag: flags.fr,
@@ -67,7 +67,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
         itemCodePattern: /^\d{3}-\d{4}$/,
         itemCodeHelp: 'Comma-separated codes in the format 878-0128, 123-4567, etc.'
       },
-       netherlands: {
+      netherlands: {
         label: 'Netherlands',
         shortLabel: 'NL',
         flag: flags.nl,
@@ -75,7 +75,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
         itemCodePattern: /^\d{6}$/,
         itemCodeHelp: 'Comma-separated 6-digit codes (e.g., 570244,112640,112640)'
       }
-      
+
     },
     gep: {
       us: {
@@ -94,7 +94,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
         itemCodePattern: /^[A-Za-z0-9]{1,10}$/,
         itemCodeHelp: 'Comma-separated item codes, can be alphanumeric (e.g., 0915,101025,1130364,H085413)'
       },
-        kentExpress: {
+      kentExpress: {
         label: 'Kent Express',
         shortLabel: 'KE',
         flag: flags.uk,
@@ -134,7 +134,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
         itemCodePattern: /^\d{3}-\d{4}$/,
         itemCodeHelp: 'Comma-separated codes in the format 878-0128, 123-4567, etc.'
       },
-        netherlands: {
+      netherlands: {
         label: 'Netherlands (Staging)',
         shortLabel: 'NL',
         flag: flags.nl,
@@ -176,7 +176,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
         value: countryKey
       }
     });
-    
+
     const newUrl = COUNTRY_CONFIG[formType][countryKey]?.url;
     if (newUrl) {
       handleInputChange({
@@ -191,7 +191,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
   // Handle remove spaces with notification
   const handleRemoveSpaces = () => {
     const originalValue = formData.items || '';
-    
+
     if (!originalValue) {
       setSpaceRemovalMessage('No item codes to clean');
       setTimeout(() => setSpaceRemovalMessage(''), 2000);
@@ -200,7 +200,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
 
     // Count spaces before removal
     const spaceCount = (originalValue.match(/\s/g) || []).length;
-    
+
     if (spaceCount === 0) {
       setSpaceRemovalMessage('No spaces found');
       setTimeout(() => setSpaceRemovalMessage(''), 2000);
@@ -209,14 +209,14 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
 
     // Call the removal function which updates the actual form input
     const cleanedValue = removeSpacesFromItems();
-    
+
     // Show success message
     setSpaceRemovalMessage(`Removed ${spaceCount} space${spaceCount === 1 ? '' : 's'}`);
     setTimeout(() => setSpaceRemovalMessage(''), 3000);
   };
 
   // Check if any conditional inputs need to be shown
-  const showConditionalInputs = 
+  const showConditionalInputs =
     selectedGroups.EmailMarketoSCS ||
     selectedGroups.EmailMarketoMktg ||
     selectedGroups.EmailFeaturedBannerMarketoSCSFeaturedBanner ||
@@ -251,7 +251,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
                     <span className={`fw-semibold ${formType === 'oneweb' ? 'text-primary' : 'text-muted'}`}>
                       OneWeb
                     </span>
-                    
+
                     <Form.Check type="switch" id="form-type-switch" className="mx-2">
                       <Form.Check.Input
                         type="checkbox"
@@ -272,7 +272,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
                         Switch between OneWeb and GEP
                       </Form.Check.Label>
                     </Form.Check>
-                    
+
                     <span className={`fw-semibold ${formType === 'gep' ? 'text-primary' : 'text-muted'}`}>
                       GEP
                     </span>
@@ -294,22 +294,22 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
                   {formType === 'oneweb' ? "OneWeb Page URL" : "GEP Page URL"}
                   <span className="text-danger"> *</span>
                 </Form.Label>
-                
+
                 <div className="d-flex gap-2 flex-wrap">
                   {/* Country Dropdown */}
                   <Dropdown onSelect={handleCountrySelect}>
-                    <Dropdown.Toggle 
-                      variant="outline-secondary" 
+                    <Dropdown.Toggle
+                      variant="outline-secondary"
                       id="country-dropdown"
                       className="d-flex align-items-center px-3"
                       style={{ minWidth: '180px' }}
                     >
-                      <img 
+                      <img
                         src={countryConfig.flag}
                         alt={`${countryConfig.label} flag`}
-                        style={{ 
-                          width: '28px', 
-                          height: '14px', 
+                        style={{
+                          width: '28px',
+                          height: '14px',
                           marginRight: '8px',
                           objectFit: 'cover'
                         }}
@@ -324,18 +324,18 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
 
                     <Dropdown.Menu>
                       {Object.entries(COUNTRY_CONFIG[formType]).map(([key, config]) => (
-                        <Dropdown.Item 
+                        <Dropdown.Item
                           key={key}
                           eventKey={key}
                           active={currentCountry === key}
                         >
                           <div className="d-flex align-items-center">
-                            <img 
+                            <img
                               src={config.flag}
                               alt={`${config.label} flag`}
-                              style={{ 
-                                width: '28px', 
-                                height: '14px', 
+                              style={{
+                                width: '28px',
+                                height: '14px',
                                 marginRight: '8px',
                                 objectFit: 'cover'
                               }}
@@ -349,7 +349,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
                       ))}
                     </Dropdown.Menu>
                   </Dropdown>
-                  
+
                   {/* URL Input */}
                   <div className="flex-grow-1">
                     <Form.Control
@@ -367,7 +367,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
                     )}
                   </div>
                 </div>
-                
+
                 <Form.Text className="text-muted">
                   {formType === 'oneweb'
                     ? "Paste the full URL ending in .aspx"
@@ -391,7 +391,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
                   </label>
                   <div className="d-flex align-items-center gap-2">
                     {spaceRemovalMessage && (
-                      <span 
+                      <span
                         className="text-success small fw-semibold animate-fade-in"
                         style={{ fontSize: '0.75rem' }}
                       >
@@ -452,7 +452,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
                 required={!selectedGroups.Generic}
               />
             </Col>
-            
+
             <Col xl={4} lg={6} md={6}>
               <FormInput
                 label="Project Name"
@@ -463,7 +463,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
                 required={!selectedGroups.Generic}
               />
             </Col>
-            
+
             <Col xl={4} lg={6} md={6}>
               <FormInput
                 label="Job Number"
@@ -471,11 +471,11 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
                 value={formData.jobNumber}
                 onChange={handleInputChange}
                 error={errors.jobNumber}
-                helpText="Ex: 26DS2828"
+                helpText="Ex: 26DSLandingPage4234"
                 required={!selectedGroups.Generic}
               />
             </Col>
-            
+
             <Col xl={4} lg={6} md={6}>
               <SelectInput
                 label="Division"
@@ -495,7 +495,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
                 required={!selectedGroups.Generic}
               />
             </Col>
-            
+
             {/* Show Pricing for OneWeb */}
             {formType === 'oneweb' && (
               <Col xl={4} lg={6} md={6} className="animate-slide-down">
@@ -519,17 +519,17 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
               selectedGroups.EmailMarketoMktg ||
               selectedGroups.EmailFeaturedBannerMarketoSCSFeaturedBanner ||
               selectedGroups.EmailFeaturedBannerMarketoMktgFeaturedBanner) && (
-              <Col xl={4} lg={6} md={6} className="animate-slide-down">
-                <FormInput
-                  label="Marketo Folder"
-                  name="marketoFolderName"
-                  value={formData.marketoFolderName}
-                  onChange={handleInputChange}
-                  helpText="Enter the Full Marketo Folder Name (e.g., EM-20240710-MedicomSterilization-12097-FL-DNTL)"
-                  required
-                />
-              </Col>
-            )}
+                <Col xl={4} lg={6} md={6} className="animate-slide-down">
+                  <FormInput
+                    label="Marketo Folder"
+                    name="marketoFolderName"
+                    value={formData.marketoFolderName}
+                    onChange={handleInputChange}
+                    helpText="Enter the Full Marketo Folder Name (e.g., EM-20240710-MedicomSterilization-12097-FL-DNTL)"
+                    required
+                  />
+                </Col>
+              )}
 
             {/* QR Code Content */}
             {(selectedGroups.QRCodeNxtBook || selectedGroups.QRCodeExternal) && (
@@ -624,7 +624,7 @@ const FormSection = ({ formData, errors, handleInputChange, handleBlur, selected
                 <strong>Quick Tip:</strong>
                 <small className="d-block mt-1">
                   <em>
-                    * denotes a required field for GA4 tagging. Generic (untagged) URLs will generate as long as Page URL is filled out. 
+                    * denotes a required field for GA4 tagging. Generic (untagged) URLs will generate as long as Page URL is filled out.
                     Rest of URLs will auto-generate once all GA4 required fields have input!
                   </em>
                 </small>
