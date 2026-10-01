@@ -78,7 +78,8 @@ export const validators = {
   },
 
   jobNumber: (value) => {
-    return !value || value.trim().length >= 6 ? null : "Lytho job number must be at least 6 characters - ex: 26DSMultichannel5773, 26DS2931, 26DSLandingPage4234";
+    const regex = /^.*[A-Za-z]{2}.*\d{4}$/;
+    return !value || regex.test(value.trim()) ? null : "Lytho job number must include 2 consecutive letters and end with 4 digits - ex: 26DSMultichannel5773, 26DS2931, 26DSLandingPage4234";
   }
 };
 
