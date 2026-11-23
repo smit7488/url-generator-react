@@ -33,7 +33,7 @@ const Navigation = ({ onToggleFilters }) => {
             {/* Col 1: Logo and Title */}
             <Col xs={6} lg={3} className="d-flex align-items-center">
               <div className="logo-wrapper d-flex align-items-center me-3">
-                  <Navbar.Brand href="/" className="d-flex align-items-center logo p-0">
+                  <Navbar.Brand href="/url-generator-react/" className="d-flex align-items-center logo p-0">
                       <HenryScheinLogo /><h1 className="logo-text fw-bold text-lg text-gray-800 m-0 d-none d-sm-block">
                       URL-GENius
                   </h1>
