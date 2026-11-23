@@ -32,7 +32,7 @@ const App = () => {
 
   const [selectedGroups, setSelectedGroups] = useState({
     Generic: true,
-    PaidDisplayAdsAdRoll: true,
+    PaidDisplayAdsStackAdapt: true,
     SocialMeta: true,
     SocialTwitter: true
   });
